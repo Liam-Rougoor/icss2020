@@ -46,8 +46,8 @@ ASSIGNMENT_OPERATOR: ':=';
 
 //--- PARSER: ---
 
-stylesheet: rule+;
-rule: selector OPEN_BRACE declaration+ CLOSE_BRACE;
+stylesheet: stylesheet_rule+;
+stylesheet_rule: selector OPEN_BRACE declaration+ CLOSE_BRACE;
 selector: ID_IDENT | CLASS_IDENT | LOWER_IDENT;
 declaration: color_declaration | size_declaration;
 color_declaration: (PROP_COLOR | PROP_BACKGROUND_COLOR) COLON COLOR SEMICOLON;
