@@ -24,11 +24,11 @@ public class ICSSParser extends Parser {
 		COLON=22, PLUS=23, MIN=24, MUL=25, ASSIGNMENT_OPERATOR=26;
 	public static final int
 		RULE_stylesheet = 0, RULE_stylesheet_rule = 1, RULE_selector = 2, RULE_declaration = 3, 
-		RULE_color_declaration = 4, RULE_size_declaration = 5;
+		RULE_property = 4, RULE_value = 5;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"stylesheet", "stylesheet_rule", "selector", "declaration", "color_declaration", 
-			"size_declaration"
+			"stylesheet", "stylesheet_rule", "selector", "declaration", "property", 
+			"value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -286,12 +286,14 @@ public class ICSSParser extends Parser {
 	}
 
 	public static class DeclarationContext extends ParserRuleContext {
-		public Color_declarationContext color_declaration() {
-			return getRuleContext(Color_declarationContext.class,0);
+		public PropertyContext property() {
+			return getRuleContext(PropertyContext.class,0);
 		}
-		public Size_declarationContext size_declaration() {
-			return getRuleContext(Size_declarationContext.class,0);
+		public TerminalNode COLON() { return getToken(ICSSParser.COLON, 0); }
+		public ValueContext value() {
+			return getRuleContext(ValueContext.class,0);
 		}
+		public TerminalNode SEMICOLON() { return getToken(ICSSParser.SEMICOLON, 0); }
 		public DeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -315,27 +317,16 @@ public class ICSSParser extends Parser {
 		DeclarationContext _localctx = new DeclarationContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_declaration);
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(28);
+			property();
+			setState(29);
+			match(COLON);
 			setState(30);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case PROP_COLOR:
-			case PROP_BACKGROUND_COLOR:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(28);
-				color_declaration();
-				}
-				break;
-			case PROP_WIDTH:
-			case PROP_HEIGHT:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(29);
-				size_declaration();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			value();
+			setState(31);
+			match(SEMICOLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -349,41 +340,40 @@ public class ICSSParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Color_declarationContext extends ParserRuleContext {
-		public TerminalNode COLON() { return getToken(ICSSParser.COLON, 0); }
-		public TerminalNode COLOR() { return getToken(ICSSParser.COLOR, 0); }
-		public TerminalNode SEMICOLON() { return getToken(ICSSParser.SEMICOLON, 0); }
+	public static class PropertyContext extends ParserRuleContext {
 		public TerminalNode PROP_COLOR() { return getToken(ICSSParser.PROP_COLOR, 0); }
 		public TerminalNode PROP_BACKGROUND_COLOR() { return getToken(ICSSParser.PROP_BACKGROUND_COLOR, 0); }
-		public Color_declarationContext(ParserRuleContext parent, int invokingState) {
+		public TerminalNode PROP_WIDTH() { return getToken(ICSSParser.PROP_WIDTH, 0); }
+		public TerminalNode PROP_HEIGHT() { return getToken(ICSSParser.PROP_HEIGHT, 0); }
+		public PropertyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_color_declaration; }
+		@Override public int getRuleIndex() { return RULE_property; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).enterColor_declaration(this);
+			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).enterProperty(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).exitColor_declaration(this);
+			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).exitProperty(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ICSSVisitor ) return ((ICSSVisitor<? extends T>)visitor).visitColor_declaration(this);
+			if ( visitor instanceof ICSSVisitor ) return ((ICSSVisitor<? extends T>)visitor).visitProperty(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Color_declarationContext color_declaration() throws RecognitionException {
-		Color_declarationContext _localctx = new Color_declarationContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_color_declaration);
+	public final PropertyContext property() throws RecognitionException {
+		PropertyContext _localctx = new PropertyContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_property);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(32);
+			setState(33);
 			_la = _input.LA(1);
-			if ( !(_la==PROP_COLOR || _la==PROP_BACKGROUND_COLOR) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PROP_COLOR) | (1L << PROP_BACKGROUND_COLOR) | (1L << PROP_WIDTH) | (1L << PROP_HEIGHT))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -391,12 +381,6 @@ public class ICSSParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(33);
-			match(COLON);
-			setState(34);
-			match(COLOR);
-			setState(35);
-			match(SEMICOLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -410,42 +394,39 @@ public class ICSSParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Size_declarationContext extends ParserRuleContext {
-		public TerminalNode COLON() { return getToken(ICSSParser.COLON, 0); }
-		public TerminalNode SEMICOLON() { return getToken(ICSSParser.SEMICOLON, 0); }
-		public TerminalNode PROP_HEIGHT() { return getToken(ICSSParser.PROP_HEIGHT, 0); }
-		public TerminalNode PROP_WIDTH() { return getToken(ICSSParser.PROP_WIDTH, 0); }
+	public static class ValueContext extends ParserRuleContext {
 		public TerminalNode PIXELSIZE() { return getToken(ICSSParser.PIXELSIZE, 0); }
 		public TerminalNode PERCENTAGE() { return getToken(ICSSParser.PERCENTAGE, 0); }
-		public Size_declarationContext(ParserRuleContext parent, int invokingState) {
+		public TerminalNode COLOR() { return getToken(ICSSParser.COLOR, 0); }
+		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_size_declaration; }
+		@Override public int getRuleIndex() { return RULE_value; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).enterSize_declaration(this);
+			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).enterValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).exitSize_declaration(this);
+			if ( listener instanceof ICSSListener ) ((ICSSListener)listener).exitValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ICSSVisitor ) return ((ICSSVisitor<? extends T>)visitor).visitSize_declaration(this);
+			if ( visitor instanceof ICSSVisitor ) return ((ICSSVisitor<? extends T>)visitor).visitValue(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Size_declarationContext size_declaration() throws RecognitionException {
-		Size_declarationContext _localctx = new Size_declarationContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_size_declaration);
+	public final ValueContext value() throws RecognitionException {
+		ValueContext _localctx = new ValueContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_value);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(35);
 			_la = _input.LA(1);
-			if ( !(_la==PROP_WIDTH || _la==PROP_HEIGHT) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PIXELSIZE) | (1L << PERCENTAGE) | (1L << COLOR))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -453,20 +434,6 @@ public class ICSSParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(38);
-			match(COLON);
-			setState(39);
-			_la = _input.LA(1);
-			if ( !(_la==PIXELSIZE || _la==PERCENTAGE) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			setState(40);
-			match(SEMICOLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -481,18 +448,17 @@ public class ICSSParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\34-\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\34(\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\6\2\20\n\2\r\2\16\2\21\3\3\3\3"+
-		"\3\3\6\3\27\n\3\r\3\16\3\30\3\3\3\3\3\4\3\4\3\5\3\5\5\5!\n\5\3\6\3\6\3"+
-		"\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\6\4\2\f\r\22\22"+
-		"\3\2\16\17\3\2\20\21\3\2\b\t\2)\2\17\3\2\2\2\4\23\3\2\2\2\6\34\3\2\2\2"+
-		"\b \3\2\2\2\n\"\3\2\2\2\f\'\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21"+
-		"\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\3\3\2\2\2\23\24\5\6\4\2\24\26"+
-		"\7\25\2\2\25\27\5\b\5\2\26\25\3\2\2\2\27\30\3\2\2\2\30\26\3\2\2\2\30\31"+
-		"\3\2\2\2\31\32\3\2\2\2\32\33\7\26\2\2\33\5\3\2\2\2\34\35\t\2\2\2\35\7"+
-		"\3\2\2\2\36!\5\n\6\2\37!\5\f\7\2 \36\3\2\2\2 \37\3\2\2\2!\t\3\2\2\2\""+
-		"#\t\3\2\2#$\7\30\2\2$%\7\13\2\2%&\7\27\2\2&\13\3\2\2\2\'(\t\4\2\2()\7"+
-		"\30\2\2)*\t\5\2\2*+\7\27\2\2+\r\3\2\2\2\5\21\30 ";
+		"\3\3\6\3\27\n\3\r\3\16\3\30\3\3\3\3\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\6\3"+
+		"\6\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\5\4\2\f\r\22\22\3\2\16\21\4\2\b\t\13"+
+		"\13\2#\2\17\3\2\2\2\4\23\3\2\2\2\6\34\3\2\2\2\b\36\3\2\2\2\n#\3\2\2\2"+
+		"\f%\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\20\21\3\2\2\2\21\17\3\2\2\2\21"+
+		"\22\3\2\2\2\22\3\3\2\2\2\23\24\5\6\4\2\24\26\7\25\2\2\25\27\5\b\5\2\26"+
+		"\25\3\2\2\2\27\30\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\32\3\2\2\2\32"+
+		"\33\7\26\2\2\33\5\3\2\2\2\34\35\t\2\2\2\35\7\3\2\2\2\36\37\5\n\6\2\37"+
+		" \7\30\2\2 !\5\f\7\2!\"\7\27\2\2\"\t\3\2\2\2#$\t\3\2\2$\13\3\2\2\2%&\t"+
+		"\4\2\2&\r\3\2\2\2\4\21\30";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

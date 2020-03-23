@@ -35,15 +35,15 @@ public interface ICSSVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDeclaration(ICSSParser.DeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ICSSParser#color_declaration}.
+	 * Visit a parse tree produced by {@link ICSSParser#property}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitColor_declaration(ICSSParser.Color_declarationContext ctx);
+	T visitProperty(ICSSParser.PropertyContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ICSSParser#size_declaration}.
+	 * Visit a parse tree produced by {@link ICSSParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSize_declaration(ICSSParser.Size_declarationContext ctx);
+	T visitValue(ICSSParser.ValueContext ctx);
 }

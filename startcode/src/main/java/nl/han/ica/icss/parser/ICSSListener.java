@@ -48,23 +48,23 @@ public interface ICSSListener extends ParseTreeListener {
 	 */
 	void exitDeclaration(ICSSParser.DeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ICSSParser#color_declaration}.
+	 * Enter a parse tree produced by {@link ICSSParser#property}.
 	 * @param ctx the parse tree
 	 */
-	void enterColor_declaration(ICSSParser.Color_declarationContext ctx);
+	void enterProperty(ICSSParser.PropertyContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ICSSParser#color_declaration}.
+	 * Exit a parse tree produced by {@link ICSSParser#property}.
 	 * @param ctx the parse tree
 	 */
-	void exitColor_declaration(ICSSParser.Color_declarationContext ctx);
+	void exitProperty(ICSSParser.PropertyContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ICSSParser#size_declaration}.
+	 * Enter a parse tree produced by {@link ICSSParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterSize_declaration(ICSSParser.Size_declarationContext ctx);
+	void enterValue(ICSSParser.ValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ICSSParser#size_declaration}.
+	 * Exit a parse tree produced by {@link ICSSParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitSize_declaration(ICSSParser.Size_declarationContext ctx);
+	void exitValue(ICSSParser.ValueContext ctx);
 }

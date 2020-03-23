@@ -64,25 +64,25 @@ public class ICSSBaseListener implements ICSSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterColor_declaration(ICSSParser.Color_declarationContext ctx) { }
+	@Override public void enterProperty(ICSSParser.PropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitColor_declaration(ICSSParser.Color_declarationContext ctx) { }
+	@Override public void exitProperty(ICSSParser.PropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSize_declaration(ICSSParser.Size_declarationContext ctx) { }
+	@Override public void enterValue(ICSSParser.ValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSize_declaration(ICSSParser.Size_declarationContext ctx) { }
+	@Override public void exitValue(ICSSParser.ValueContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

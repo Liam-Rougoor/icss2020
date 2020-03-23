@@ -33,7 +33,9 @@
 				<version>3.8.0</version>
 				<configuration>
 					<release>13</release>
-				</configuration>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
