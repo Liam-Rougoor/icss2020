@@ -48,10 +48,14 @@ ASSIGNMENT_OPERATOR: ':=';
 
 stylesheet: stylesheet_element+;
 stylesheet_element: stylesheet_rule | variable_assignment;
-stylesheet_rule: selector OPEN_BRACE declaration+ CLOSE_BRACE;
+stylesheet_rule: selector OPEN_BRACE rule_element+ CLOSE_BRACE;
+rule_element: declaration | if_expression;
 selector: ID_IDENT | CLASS_IDENT | LOWER_IDENT;
-declaration: property COLON expression SEMICOLON;
+declaration:  variable_assignment |property COLON expression SEMICOLON;
+if_expression: IF BOX_BRACKET_OPEN (bool | variable_reference) BOX_BRACKET_CLOSE OPEN_BRACE rule_element+ CLOSE_BRACE;
 property: PROP_COLOR | PROP_BACKGROUND_COLOR | PROP_WIDTH | PROP_HEIGHT;
 expression: expression MUL expression | expression (PLUS | MIN) expression | value;
-value: PIXELSIZE | PERCENTAGE | COLOR | TRUE | FALSE | CAPITAL_IDENT | SCALAR;
-variable_assignment: CAPITAL_IDENT ASSIGNMENT_OPERATOR expression SEMICOLON;
+value: PIXELSIZE | PERCENTAGE | COLOR | bool | variable_reference | SCALAR;
+variable_assignment: variable_reference ASSIGNMENT_OPERATOR expression SEMICOLON;
+variable_reference: CAPITAL_IDENT;
+bool: TRUE | FALSE;

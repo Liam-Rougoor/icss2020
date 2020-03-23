@@ -1,5 +1,6 @@
 package nl.han.ica.icss.parser;
 
+import java.util.ArrayList;
 import java.util.Stack;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.*;
@@ -97,10 +98,6 @@ public class ASTListener extends ICSSBaseListener {
 			value = new PixelLiteral(ctx.getText());
 		} else if(ctx.PERCENTAGE() != null) {
 			value = new PercentageLiteral(ctx.getText());
-		} else if(ctx.TRUE() != null || ctx.FALSE() != null){
-			value = new BoolLiteral(ctx.getText());
-		} else if(ctx.CAPITAL_IDENT() != null){
-			value = new VariableReference(ctx.getText());
 		} else if(ctx.SCALAR() != null){
 			value = new ScalarLiteral(ctx.getText());
 		}
@@ -110,8 +107,6 @@ public class ASTListener extends ICSSBaseListener {
 	@Override
 	public void enterVariable_assignment(ICSSParser.Variable_assignmentContext ctx) {
 		VariableAssignment assignment = new VariableAssignment();
-		VariableReference reference = new VariableReference(ctx.getChild(0).getText());
-		assignment.addChild(reference);
 		currentContainer.peek().addChild(assignment);
 		currentContainer.push(assignment);
 	}
@@ -143,5 +138,28 @@ public class ASTListener extends ICSSBaseListener {
 		if(ctx.getChildCount() == 3){
 			currentContainer.pop();
 		}
+	}
+
+	@Override
+	public void enterIf_expression(ICSSParser.If_expressionContext ctx) {
+		IfClause ifClause = new IfClause();
+		currentContainer.peek().addChild(ifClause);
+		currentContainer.push(ifClause);
+	}
+
+	@Override
+	public void exitIf_expression(ICSSParser.If_expressionContext ctx) {
+		currentContainer.pop();
+	}
+
+	@Override
+	public void enterBool(ICSSParser.BoolContext ctx) {
+		currentContainer.peek().addChild(new BoolLiteral(ctx.getChild(0).getText()));
+	}
+
+	@Override
+	public void enterVariable_reference(ICSSParser.Variable_referenceContext ctx) {
+		VariableReference variable = new VariableReference(ctx.getChild(0).getText());
+		currentContainer.peek().addChild(variable);
 	}
 }
