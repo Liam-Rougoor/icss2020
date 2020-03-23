@@ -46,9 +46,11 @@ ASSIGNMENT_OPERATOR: ':=';
 
 //--- PARSER: ---
 
-stylesheet: stylesheet_rule+;
+stylesheet: stylesheet_element+;
+stylesheet_element: stylesheet_rule | variable_assignment;
 stylesheet_rule: selector OPEN_BRACE declaration+ CLOSE_BRACE;
 selector: ID_IDENT | CLASS_IDENT | LOWER_IDENT;
 declaration: property COLON value SEMICOLON;
 property: PROP_COLOR | PROP_BACKGROUND_COLOR | PROP_WIDTH | PROP_HEIGHT;
-value: PIXELSIZE | PERCENTAGE | COLOR;
+value: PIXELSIZE | PERCENTAGE | COLOR | TRUE | FALSE | CAPITAL_IDENT;
+variable_assignment: CAPITAL_IDENT ASSIGNMENT_OPERATOR value SEMICOLON;

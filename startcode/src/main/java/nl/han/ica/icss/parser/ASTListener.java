@@ -2,6 +2,7 @@ package nl.han.ica.icss.parser;
 
 import java.util.Stack;
 import nl.han.ica.icss.ast.*;
+import nl.han.ica.icss.ast.literals.BoolLiteral;
 import nl.han.ica.icss.ast.literals.ColorLiteral;
 import nl.han.ica.icss.ast.literals.PercentageLiteral;
 import nl.han.ica.icss.ast.literals.PixelLiteral;
@@ -89,15 +90,33 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterValue(ICSSParser.ValueContext ctx) {
-		Literal value = null;
+		Expression value = null;
 		if(ctx.COLOR() != null){
 			value = new ColorLiteral(ctx.getText());
 		} else if(ctx.PIXELSIZE() != null) {
 			value = new PixelLiteral(ctx.getText());
 		} else if(ctx.PERCENTAGE() != null) {
 			value = new PercentageLiteral(ctx.getText());
+		} else if(ctx.TRUE() != null || ctx.FALSE() != null){
+			value = new BoolLiteral(ctx.getText());
+		} else if(ctx.CAPITAL_IDENT() != null){
+			value = new VariableReference(ctx.getText());
 		}
 		currentContainer.peek().addChild(value);
+	}
+
+	@Override
+	public void enterVariable_assignment(ICSSParser.Variable_assignmentContext ctx) {
+		VariableAssignment assignment = new VariableAssignment();
+		VariableReference reference = new VariableReference(ctx.getChild(0).getText());
+		assignment.addChild(reference);
+		currentContainer.peek().addChild(assignment);
+		currentContainer.push(assignment);
+	}
+
+	@Override
+	public void exitVariable_assignment(ICSSParser.Variable_assignmentContext ctx) {
+		currentContainer.pop();
 	}
 
 	@Override
