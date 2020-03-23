@@ -2,10 +2,10 @@ package nl.han.ica.icss.parser;
 
 import java.util.Stack;
 import nl.han.ica.icss.ast.*;
-import nl.han.ica.icss.ast.literals.BoolLiteral;
-import nl.han.ica.icss.ast.literals.ColorLiteral;
-import nl.han.ica.icss.ast.literals.PercentageLiteral;
-import nl.han.ica.icss.ast.literals.PixelLiteral;
+import nl.han.ica.icss.ast.literals.*;
+import nl.han.ica.icss.ast.operations.AddOperation;
+import nl.han.ica.icss.ast.operations.MultiplyOperation;
+import nl.han.ica.icss.ast.operations.SubtractOperation;
 import nl.han.ica.icss.ast.selectors.ClassSelector;
 import nl.han.ica.icss.ast.selectors.IdSelector;
 import nl.han.ica.icss.ast.selectors.TagSelector;
@@ -101,6 +101,8 @@ public class ASTListener extends ICSSBaseListener {
 			value = new BoolLiteral(ctx.getText());
 		} else if(ctx.CAPITAL_IDENT() != null){
 			value = new VariableReference(ctx.getText());
+		} else if(ctx.SCALAR() != null){
+			value = new ScalarLiteral(ctx.getText());
 		}
 		currentContainer.peek().addChild(value);
 	}
@@ -120,22 +122,26 @@ public class ASTListener extends ICSSBaseListener {
 	}
 
 	@Override
-	public void enterEveryRule(ParserRuleContext ctx) {
-		super.enterEveryRule(ctx);
+	public void enterExpression(ICSSParser.ExpressionContext ctx) {
+		if(ctx.getChildCount() == 3){
+			Operation operation = null;
+			// TODO Strings mogelijk refactoren in G4 bestand (naar operator o.i.d.)
+			if(ctx.getChild(1).getText().charAt(0) == '*'){
+				operation = new MultiplyOperation();
+			} else if(ctx.getChild(1).getText().charAt(0) == '+'){
+				operation = new AddOperation();
+			} else if(ctx.getChild(1).getText().charAt(0) == '-'){
+				operation = new SubtractOperation();
+			}
+			currentContainer.peek().addChild(operation);
+			currentContainer.push(operation);
+		}
 	}
 
 	@Override
-	public void exitEveryRule(ParserRuleContext ctx) {
-		super.exitEveryRule(ctx);
-	}
-
-	@Override
-	public void visitTerminal(TerminalNode node) {
-		super.visitTerminal(node);
-	}
-
-	@Override
-	public void visitErrorNode(ErrorNode node) {
-		super.visitErrorNode(node);
+	public void exitExpression(ICSSParser.ExpressionContext ctx) {
+		if(ctx.getChildCount() == 3){
+			currentContainer.pop();
+		}
 	}
 }
