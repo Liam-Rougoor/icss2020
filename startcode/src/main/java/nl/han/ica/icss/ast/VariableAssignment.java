@@ -74,6 +74,6 @@ public class VariableAssignment extends ASTNode {
 		} else if(expression instanceof ScalarLiteral){
 			expressionType = ExpressionType.SCALAR;
 		}
-		variableTypes.getLast().put(name.name, expressionType); //TODO Misschien wisselen naar getFirst?
+		variableTypes.getFirst().put(name.name, expressionType);
 	}
 }

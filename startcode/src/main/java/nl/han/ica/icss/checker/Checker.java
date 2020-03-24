@@ -21,7 +21,7 @@ public class Checker {
     private void check(ASTNode node){
         //TODO Refactor, niet SOLID
         if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.addLast(new HashMap<>()); // TODO Misschien wisselen naar first?
+            variableTypes.addFirst(new HashMap<>());
         }
 
         node.check(variableTypes);
@@ -31,7 +31,7 @@ public class Checker {
 
         //TODO Refactor, niet SOLID
         if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.removeLast(); // TODO Misschien wisselen naar first?
+            variableTypes.removeFirst();
         }
     }
 }
