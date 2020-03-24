@@ -1,7 +1,7 @@
 package nl.han.ica.icss.ast.operations;
 
 import nl.han.ica.icss.ast.Operation;
-import nl.han.ica.icss.ast.literals.ScalarLiteral;
+import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableTypeStore;
 
 public class MultiplyOperation extends Operation {
@@ -15,8 +15,15 @@ public class MultiplyOperation extends Operation {
     public void check(VariableTypeStore variableTypes) {
         super.check(variableTypes);
         String errorMessage = "Multiplication must contain scalar value.";
-        boolean error;
-        if (!(lhs instanceof ScalarLiteral && !(rhs instanceof ScalarLiteral))) {
+        if (lhs.getType(variableTypes) != ExpressionType.SCALAR && rhs.getType(variableTypes) != ExpressionType.SCALAR) {
+            setError(errorMessage);
+            lhs.setError(errorMessage);
+            rhs.setError(errorMessage);
         }
+    }
+
+    @Override
+    public ExpressionType getType(VariableTypeStore variableTypes) {
+        return lhs.getType(variableTypes) != ExpressionType.SCALAR ? lhs.getType(variableTypes) : rhs.getType(variableTypes);
     }
 }

@@ -60,19 +60,6 @@ public class VariableAssignment extends ASTNode {
 
 	@Override
 	public void check(VariableTypeStore variableTypes) {
-		ExpressionType expressionType = ExpressionType.UNDEFINED;
-		//TODO Refactor if..else constructie, niet SOLID
-		if(expression instanceof BoolLiteral){
-			expressionType = ExpressionType.BOOL;
-		} else if(expression instanceof ColorLiteral){
-			expressionType = ExpressionType.COLOR;
-		} else if(expression instanceof PercentageLiteral){
-			expressionType = ExpressionType.PERCENTAGE;
-		} else if(expression instanceof PixelLiteral){
-			expressionType = ExpressionType.PIXEL;
-		} else if(expression instanceof ScalarLiteral){
-			expressionType = ExpressionType.SCALAR;
-		}
-		variableTypes.storeVariable(name.name, expressionType);
+		variableTypes.storeVariable(name.name, expression.getType(variableTypes));
 	}
 }

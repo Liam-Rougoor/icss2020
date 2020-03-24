@@ -8,7 +8,7 @@ import java.util.Objects;
 public class VariableReference extends Expression {
 
 	public String name;
-	
+
 	public VariableReference(String name) {
 		super();
 		this.name = name;
@@ -42,7 +42,7 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
-	public ExpressionType getType() {
-		return null;
+	public ExpressionType getType(VariableTypeStore variableTypes) {
+		return variableTypes.getVariableType(name);
 	}
 }

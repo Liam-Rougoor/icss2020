@@ -8,12 +8,7 @@ public abstract class Expression extends ASTNode {
         return ExpressionType.UNDEFINED;
     }
 
-    //TODO Navragen bij Michel, voelt als een aparte constructie.
-    public boolean isValidVariableExpression(VariableTypeStore variableTypes, ExpressionType validType){
-        if(!(this instanceof VariableReference)){
-            return false;
-        }
-        VariableReference variable = (VariableReference) this;
-        return variableTypes.getVariableType(variable.name) == validType;
+    public ExpressionType getType(VariableTypeStore variableTypes){
+        return getType();
     }
 }

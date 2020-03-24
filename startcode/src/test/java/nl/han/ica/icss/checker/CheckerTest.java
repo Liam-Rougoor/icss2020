@@ -10,7 +10,7 @@ class CheckerTest {
 
     @Test
     void check() {
-        AST uncheckedLevel = Fixtures.uncheckedLevel1();
+        AST uncheckedLevel = Fixtures.uncheckedLevel2();
         new Checker().check(uncheckedLevel);
     }
 }

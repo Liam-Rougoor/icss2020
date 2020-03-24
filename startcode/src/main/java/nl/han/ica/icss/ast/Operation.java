@@ -33,10 +33,10 @@ public abstract class Operation extends Expression {
     @Override
     public void check(VariableTypeStore variableTypes) {
         boolean error = false;
-        if(lhs.getType() == ExpressionType.COLOR || lhs.isValidVariableExpression(variableTypes, ExpressionType.COLOR)){
+        if(lhs.getType(variableTypes) == ExpressionType.COLOR){
             lhs.setError("Cannot use arithmetic operations on colors");
             error = true;
-        } if(rhs.getType() == ExpressionType.COLOR || rhs.isValidVariableExpression(variableTypes, ExpressionType.COLOR)){
+        } if(rhs.getType(variableTypes) == ExpressionType.COLOR){
             rhs.setError("Cannot use arithmetic operations on colors.");
             error = true;
         }
