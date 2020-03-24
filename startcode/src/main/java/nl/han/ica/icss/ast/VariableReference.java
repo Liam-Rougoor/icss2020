@@ -1,9 +1,9 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.VariableTypeStore;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class VariableReference extends Expression {
@@ -36,12 +36,9 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
-	public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes) {
-		for(HashMap<String, ExpressionType> variables : variableTypes){
-			if(variables.containsKey(name)){
-				return;
-			}
+	public void check(VariableTypeStore variableTypes) {
+		if(!variableTypes.isDefined(name)) {
+			setError("Variable is undefined within scope.");
 		}
-		setError("Variable is undefined within scope.");
 	}
 }

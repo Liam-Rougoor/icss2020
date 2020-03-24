@@ -1,11 +1,9 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.literals.ColorLiteral;
-import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.VariableTypeStore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 public abstract class Operation extends Expression {
 
@@ -33,7 +31,7 @@ public abstract class Operation extends Expression {
     }
 
     @Override
-    public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes) {
+    public void check(VariableTypeStore variableTypes) {
         boolean error = false;
         if(lhs instanceof ColorLiteral){
             lhs.setError("Cannot use arithmetic operations on colors");

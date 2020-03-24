@@ -2,10 +2,9 @@ package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.literals.*;
 import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.VariableTypeStore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -60,7 +59,7 @@ public class VariableAssignment extends ASTNode {
 	}
 
 	@Override
-	public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes) {
+	public void check(VariableTypeStore variableTypes) {
 		ExpressionType expressionType = ExpressionType.UNDEFINED;
 		//TODO Refactor if..else constructie, niet SOLID
 		if(expression instanceof BoolLiteral){
@@ -74,6 +73,6 @@ public class VariableAssignment extends ASTNode {
 		} else if(expression instanceof ScalarLiteral){
 			expressionType = ExpressionType.SCALAR;
 		}
-		variableTypes.getFirst().put(name.name, expressionType);
+		variableTypes.storeVariable(name.name, expressionType);
 	}
 }

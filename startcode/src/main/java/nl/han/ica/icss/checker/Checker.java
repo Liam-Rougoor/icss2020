@@ -10,18 +10,18 @@ import nl.han.ica.icss.ast.types.*;
 
 public class Checker {
 
-    private LinkedList<HashMap<String,ExpressionType>> variableTypes;
+    private VariableTypeStore variableTypes;
 
     public void check(AST ast) {
-        variableTypes = new LinkedList<>();
-        variableTypes.addFirst(new HashMap<>());
+        variableTypes = new VariableTypeStore();
+        variableTypes.addScopeLevel();
         check(ast.root);
     }
 
     private void check(ASTNode node){
         //TODO Refactor, niet SOLID
         if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.addFirst(new HashMap<>());
+            variableTypes.addScopeLevel();
         }
 
         node.check(variableTypes);
@@ -31,7 +31,7 @@ public class Checker {
 
         //TODO Refactor, niet SOLID
         if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.removeFirst();
+            variableTypes.removeScopeLevel();
         }
     }
 }
