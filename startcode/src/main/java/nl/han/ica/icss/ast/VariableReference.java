@@ -1,7 +1,7 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.VariableTypeStore;
+import nl.han.ica.icss.checker.VariableStore;
 
 import java.util.Objects;
 
@@ -35,14 +35,14 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
-	public void check(VariableTypeStore variableTypes) {
+	public void check(VariableStore<ExpressionType> variableTypes) {
 		if(!variableTypes.isDefined(name)) {
 			setError("Variable is undefined within scope.");
 		}
 	}
 
 	@Override
-	public ExpressionType getType(VariableTypeStore variableTypes) {
+	public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
 		return variableTypes.getVariableType(name);
 	}
 }

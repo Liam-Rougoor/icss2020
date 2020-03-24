@@ -1,14 +1,12 @@
 package nl.han.ica.icss.checker;
 
-import nl.han.ica.icss.ast.types.ExpressionType;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class VariableTypeStore extends VariableStore{
-    private LinkedList<HashMap<String, ExpressionType>> variableTypes;
+public class VariableStore<T> {
+    private LinkedList<HashMap<String, T>> variableTypes;
 
-    public VariableTypeStore() {
+    public VariableStore() {
         variableTypes = new LinkedList<>();
     }
 
@@ -20,21 +18,21 @@ public class VariableTypeStore extends VariableStore{
         variableTypes.removeFirst();
     }
 
-    public void storeVariable(String variable, ExpressionType variableType){
-        variableTypes.getFirst().put(variable, variableType);
+    public void storeVariable(String variable, T type){
+        variableTypes.getFirst().put(variable, type);
     }
 
-    public ExpressionType getVariableType(String variable){
-        for(HashMap<String, ExpressionType> map : variableTypes){
+    public T getVariableType(String variable){
+        for(HashMap<String, T> map : variableTypes){
             if(map.containsKey(variable)){
                 return map.get(variable);
             }
         }
-        return ExpressionType.UNDEFINED;
+        return null;
     }
 
     public boolean isDefined(String variable){
-        for(HashMap<String, ExpressionType> variables : variableTypes){
+        for(HashMap<String, T> variables : variableTypes){
             if(variables.containsKey(variable)){
                 return true;
             }

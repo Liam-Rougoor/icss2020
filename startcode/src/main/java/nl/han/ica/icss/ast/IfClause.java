@@ -1,7 +1,7 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.VariableTypeStore;
+import nl.han.ica.icss.checker.VariableStore;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -62,7 +62,7 @@ public class IfClause extends ASTNode {
     }
 
     @Override
-    public void check(VariableTypeStore variableTypes) {
+    public void check(VariableStore<ExpressionType> variableTypes) {
         ExpressionType conditionType = conditionalExpression.getType(variableTypes);
         if(conditionType != ExpressionType.BOOL){
             String errorMessage = "Expression must be of type boolean. ";

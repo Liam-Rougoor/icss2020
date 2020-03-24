@@ -1,7 +1,7 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.VariableTypeStore;
+import nl.han.ica.icss.checker.VariableStore;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public abstract class Operation extends Expression {
     }
 
     @Override
-    public void check(VariableTypeStore variableTypes) {
+    public void check(VariableStore<ExpressionType> variableTypes) {
         boolean error = false;
         if(lhs.getType(variableTypes) == ExpressionType.COLOR){
             lhs.setError("Cannot use arithmetic operations on colors");

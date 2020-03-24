@@ -2,7 +2,7 @@ package nl.han.ica.icss.ast.operations;
 
 import nl.han.ica.icss.ast.Operation;
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.VariableTypeStore;
+import nl.han.ica.icss.checker.VariableStore;
 
 public class SubtractOperation extends Operation {
 
@@ -12,7 +12,7 @@ public class SubtractOperation extends Operation {
     }
 
     @Override
-    public void check(VariableTypeStore variableTypes) {
+    public void check(VariableStore<ExpressionType> variableTypes) {
         super.check(variableTypes);
         String errorMessage = "Operands must be of equal type. ";
         if (lhs.getType(variableTypes) != rhs.getType(variableTypes)) {
@@ -23,7 +23,7 @@ public class SubtractOperation extends Operation {
     }
 
     @Override
-    public ExpressionType getType(VariableTypeStore variableTypes) {
+    public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
         return lhs.getType(variableTypes);
     }
 }

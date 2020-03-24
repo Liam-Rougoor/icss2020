@@ -10,10 +10,10 @@ import nl.han.ica.icss.ast.types.*;
 
 public class Checker {
 
-    private VariableTypeStore variableTypes;
+    private VariableStore<ExpressionType> variableTypes;
 
     public void check(AST ast) {
-        variableTypes = new VariableTypeStore();
+        variableTypes = new VariableStore<ExpressionType>();
         variableTypes.addScopeLevel();
         check(ast.root);
     }

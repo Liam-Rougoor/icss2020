@@ -1,8 +1,7 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.ast.literals.*;
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.VariableTypeStore;
+import nl.han.ica.icss.checker.VariableStore;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -59,7 +58,7 @@ public class VariableAssignment extends ASTNode {
 	}
 
 	@Override
-	public void check(VariableTypeStore variableTypes) {
+	public void check(VariableStore<ExpressionType> variableTypes) {
 		variableTypes.storeVariable(name.name, expression.getType(variableTypes));
 	}
 }
