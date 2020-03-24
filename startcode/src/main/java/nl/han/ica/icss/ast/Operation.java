@@ -1,6 +1,11 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.literals.ColorLiteral;
+import nl.han.ica.icss.ast.types.ExpressionType;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public abstract class Operation extends Expression {
 
@@ -25,5 +30,20 @@ public abstract class Operation extends Expression {
             rhs = (Expression) child;
         }
         return this;
+    }
+
+    @Override
+    public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes) {
+        boolean error = false;
+        if(lhs instanceof ColorLiteral){
+            lhs.setError("Cannot use arithmetic operations on colors");
+            error = true;
+        } if(rhs instanceof ColorLiteral){
+            rhs.setError("Cannot use arithmetic operations on colors.");
+            error = true;
+        }
+        if(error){
+            setError("Cannot use arithmetic operations on colors.");
+        }
     }
 }

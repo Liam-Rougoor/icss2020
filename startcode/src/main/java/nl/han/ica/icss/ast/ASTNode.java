@@ -1,8 +1,11 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.SemanticError;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ASTNode {
@@ -49,6 +52,8 @@ public class ASTNode {
     public boolean hasError() {
         return error != null;
     }
+
+    public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes){ }
 
 	@Override
 	public String toString() {
