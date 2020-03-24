@@ -14,14 +14,24 @@ public class Checker {
 
     public void check(AST ast) {
         variableTypes = new LinkedList<>();
-
+        variableTypes.addFirst(new HashMap<>());
         check(ast.root);
     }
 
     private void check(ASTNode node){
+        //TODO Refactor, niet SOLID
+        if(node instanceof IfClause || node instanceof Stylerule){
+            variableTypes.addLast(new HashMap<>()); // TODO Misschien wisselen naar first?
+        }
+
         node.check(variableTypes);
         for(ASTNode child : node.getChildren()){
             check(child);
+        }
+
+        //TODO Refactor, niet SOLID
+        if(node instanceof IfClause || node instanceof Stylerule){
+            variableTypes.removeLast(); // TODO Misschien wisselen naar first?
         }
     }
 }

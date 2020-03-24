@@ -1,6 +1,11 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.literals.*;
+import nl.han.ica.icss.ast.types.ExpressionType;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -52,5 +57,23 @@ public class VariableAssignment extends ASTNode {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, expression);
+	}
+
+	@Override
+	public void check(LinkedList<HashMap<String, ExpressionType>> variableTypes) {
+		ExpressionType expressionType = ExpressionType.UNDEFINED;
+		//TODO Refactor if..else constructie, niet SOLID
+		if(expression instanceof BoolLiteral){
+			expressionType = ExpressionType.BOOL;
+		} else if(expression instanceof ColorLiteral){
+			expressionType = ExpressionType.COLOR;
+		} else if(expression instanceof PercentageLiteral){
+			expressionType = ExpressionType.PERCENTAGE;
+		} else if(expression instanceof PixelLiteral){
+			expressionType = ExpressionType.PIXEL;
+		} else if(expression instanceof ScalarLiteral){
+			expressionType = ExpressionType.SCALAR;
+		}
+		variableTypes.getLast().put(name.name, expressionType); //TODO Misschien wisselen naar getFirst?
 	}
 }
