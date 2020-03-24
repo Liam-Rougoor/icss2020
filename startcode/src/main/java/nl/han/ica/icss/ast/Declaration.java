@@ -1,5 +1,9 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.ast.types.PropertyType;
+import nl.han.ica.icss.checker.VariableTypeStore;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -54,5 +58,16 @@ public class Declaration extends ASTNode {
 	@Override
 	public int hashCode() {
 		return Objects.hash(property, expression);
+	}
+
+	@Override
+	public void check(VariableTypeStore variableTypes) {
+		if(property.getType() == PropertyType.COLOR && expression.getType(variableTypes) != ExpressionType.COLOR
+		|| property.getType() == PropertyType.SIZE && expression.getType(variableTypes) != ExpressionType.PIXEL && expression.getType(variableTypes) != ExpressionType.PERCENTAGE){
+			String errorMessage = "Property and expression type do not match. ";
+			setError(errorMessage);
+			property.setError(errorMessage + property.getType());
+			expression.setError(errorMessage + expression.getType(variableTypes));
+		}
 	}
 }
