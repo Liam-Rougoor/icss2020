@@ -3,7 +3,6 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableTypeStore;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class VariableReference extends Expression {
@@ -40,5 +39,10 @@ public class VariableReference extends Expression {
 		if(!variableTypes.isDefined(name)) {
 			setError("Variable is undefined within scope.");
 		}
+	}
+
+	@Override
+	public ExpressionType getType() {
+		return null;
 	}
 }

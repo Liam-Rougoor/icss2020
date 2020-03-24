@@ -1,6 +1,7 @@
 package nl.han.ica.icss.ast.literals;
 
 import nl.han.ica.icss.ast.Literal;
+import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
@@ -26,6 +27,11 @@ public class BoolLiteral extends Literal {
         if (!super.equals(o)) return false;
         BoolLiteral that = (BoolLiteral) o;
         return value == that.value;
+    }
+
+    @Override
+    public ExpressionType getType() {
+        return ExpressionType.BOOL;
     }
 
     @Override
