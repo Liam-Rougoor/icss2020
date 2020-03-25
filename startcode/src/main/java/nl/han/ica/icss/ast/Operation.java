@@ -35,6 +35,16 @@ public abstract class Operation extends Expression {
     }
 
     @Override
+    public ASTNode removeChild(ASTNode child) {
+        if(lhs == child) {
+            lhs = null;
+        } else if(rhs == child){
+            rhs = null;
+        }
+        return this;
+    }
+
+    @Override
     public void check(VariableStore<ExpressionType> variableTypes) {
         boolean error = false;
         if(lhs.getType(variableTypes) == ExpressionType.COLOR){

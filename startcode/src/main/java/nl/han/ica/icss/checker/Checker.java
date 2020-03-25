@@ -13,7 +13,7 @@ public class Checker {
     private VariableStore<ExpressionType> variableTypes;
 
     public void check(AST ast) {
-        variableTypes = new VariableStore<ExpressionType>();
+        variableTypes = new VariableStore<>();
         variableTypes.addScopeLevel();
         check(ast.root);
     }
