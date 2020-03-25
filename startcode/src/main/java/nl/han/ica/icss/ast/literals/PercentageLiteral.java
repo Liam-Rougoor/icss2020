@@ -42,4 +42,10 @@ public class PercentageLiteral extends Literal {
     public int getIntValue() {
         return value;
     }
+
+    @Override
+    public void enterCSS(StringBuilder builder) {
+        builder.append(value);
+        builder.append('%');
+    }
 }

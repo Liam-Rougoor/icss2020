@@ -51,6 +51,16 @@ public class Stylerule extends ASTNode {
 		return this;
 	}
 
+	@Override
+	public void enterCSS(StringBuilder builder) {
+		builder.append(selectors.get(0));
+		builder.append(" {\n");
+	}
+
+	@Override
+	public void exitCSS(StringBuilder builder) {
+		builder.append("}\n");
+	}
 
 	@Override
 	public boolean equals(Object o) {

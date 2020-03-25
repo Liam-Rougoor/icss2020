@@ -93,4 +93,10 @@ public class ASTNode {
         }
         return true;
     }
+
+    public void enterCSS(StringBuilder builder){
+    }
+
+    public void exitCSS(StringBuilder builder){
+    }
 }

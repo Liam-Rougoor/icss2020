@@ -34,4 +34,9 @@ public class ColorLiteral extends Literal {
     public ExpressionType getType() {
         return ExpressionType.COLOR;
     }
+
+    @Override
+    public void enterCSS(StringBuilder builder) {
+        builder.append(value);
+    }
 }

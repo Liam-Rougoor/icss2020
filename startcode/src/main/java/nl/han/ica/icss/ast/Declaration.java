@@ -70,4 +70,15 @@ public class Declaration extends ASTNode {
 			expression.setError(errorMessage + expression.getType(variableTypes));
 		}
 	}
+
+	@Override
+	public void enterCSS(StringBuilder builder) {
+		builder.append(property.name);
+		builder.append(": ");
+	}
+
+	@Override
+	public void exitCSS(StringBuilder builder) {
+		builder.append(";\n");
+	}
 }
