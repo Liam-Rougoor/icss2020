@@ -46,7 +46,7 @@ public class PixelLiteral extends Literal {
 
     @Override
     public void enterCSS(CSSBuilder builder) {
-        builder.append(value);
-        builder.append("px");
+        builder.appendEntry(String.valueOf(value));
+        builder.appendEntry("px");
     }
 }

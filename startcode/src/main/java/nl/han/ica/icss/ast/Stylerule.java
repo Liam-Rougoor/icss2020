@@ -56,15 +56,17 @@ public class Stylerule extends ASTNode {
 	@Override
 	public void enterCSS(CSSBuilder builder) {
     	builder.applyScope();
-		builder.append(selectors.get(0));
-		builder.append(" {\n");
+		builder.appendEntry(selectors.get(0).toString());
+		builder.appendEntry(" {\n");
 		builder.addScope();
+		builder.removeScope();
+		builder.appendExit("}\n");
 	}
 
 	@Override
 	public void exitCSS(CSSBuilder builder) {
 		builder.removeScope();
-    	builder.append("}\n");
+    	builder.appendExit("}\n");
 	}
 
 	@Override

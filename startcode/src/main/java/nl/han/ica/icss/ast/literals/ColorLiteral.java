@@ -38,6 +38,6 @@ public class ColorLiteral extends Literal {
 
     @Override
     public void enterCSS(CSSBuilder builder) {
-        builder.append(value);
+        builder.appendEntry(value);
     }
 }

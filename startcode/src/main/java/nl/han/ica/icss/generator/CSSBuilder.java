@@ -1,30 +1,46 @@
 package nl.han.ica.icss.generator;
 
-import nl.han.ica.icss.ast.Selector;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class CSSBuilder {
     private StringBuilder builder;
     private int scope;
 
+    private Queue<String> entries;
+    private Stack<String> exits;
+
     public CSSBuilder(){
         builder = new StringBuilder();
+        entries = new LinkedList<>();
+        exits = new Stack<>();
         scope = 0;
     }
 
-    public void append(String value){
-        builder.append(value);
+    public void apply(){
+        applyEntry();
+        applyExit();
     }
 
-    public void append(int value){
-        builder.append(value);
+    private void applyEntry(){
+        while(!entries.isEmpty()){
+           builder.append(entries.poll());
+        }
     }
 
-    public void append(char value){
-        builder.append(value);
+    private void applyExit(){
+        while(!exits.isEmpty()){
+            builder.append(exits.pop());
+        }
     }
 
-    public void append(Object value){
-        builder.append(value);
+    public void appendEntry(String value) {
+        entries.offer(value);
+    }
+
+    public void appendExit(String value) {
+        exits.push(value);
     }
 
     public void addScope(){
@@ -36,7 +52,7 @@ public class CSSBuilder {
     }
 
     public void applyScope(){
-        builder.append("  ".repeat(scope));
+        entries.offer("  ".repeat(scope));
     }
 
     @Override

@@ -6,19 +6,15 @@ public class Generator {
 
 	public String generate(AST ast) {
 		CSSBuilder builder = new CSSBuilder();
-		generate(ast.root, builder, 0);
+		generate(ast.root, builder);
+		builder.apply();
 		return builder.toString();
 	}
 
-	public void generate(ASTNode node, CSSBuilder builder, int scope){
-
+	public void generate(ASTNode node, CSSBuilder builder){
 		node.enterCSS(builder);
-
 		for(ASTNode child : node.getChildren()){
-			generate(child, builder, scope);
+			generate(child, builder);
 		}
-
-		node.exitCSS(builder);
-
 	}
 }

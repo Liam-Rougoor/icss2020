@@ -46,7 +46,7 @@ public class PercentageLiteral extends Literal {
 
     @Override
     public void enterCSS(CSSBuilder builder) {
-        builder.append(value);
-        builder.append('%');
+        builder.appendEntry(String.valueOf(value));
+        builder.appendEntry("%");
     }
 }

@@ -75,12 +75,8 @@ public class Declaration extends ASTNode {
 	@Override
 	public void enterCSS(CSSBuilder builder) {
 		builder.applyScope();
-		builder.append(property.name);
-		builder.append(": ");
-	}
-
-	@Override
-	public void exitCSS(CSSBuilder builder) {
-		builder.append(";\n");
+		builder.appendEntry(property.name);
+		builder.appendEntry(": ");
+		builder.appendExit(";\n");
 	}
 }
