@@ -91,7 +91,7 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void enterValue(ICSSParser.ValueContext ctx) {
-		Expression value = null;
+		Expression value;
 		if(ctx.COLOR() != null){
 			value = new ColorLiteral(ctx.getText());
 		} else if(ctx.PIXELSIZE() != null) {
@@ -100,6 +100,8 @@ public class ASTListener extends ICSSBaseListener {
 			value = new PercentageLiteral(ctx.getText());
 		} else if(ctx.SCALAR() != null){
 			value = new ScalarLiteral(ctx.getText());
+		} else{
+			return;
 		}
 		currentContainer.peek().addChild(value);
 	}

@@ -42,6 +42,12 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
+	public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+		parent.removeChild(this);
+		parent.addChild(variableValues.getVariableType(name));
+	}
+
+	@Override
 	public ExpressionType getType() {
 		return ExpressionType.VARIABLE;
 	}
