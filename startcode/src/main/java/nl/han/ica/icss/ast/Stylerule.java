@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.generator.CSSBuilder;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -52,14 +54,17 @@ public class Stylerule extends ASTNode {
 	}
 
 	@Override
-	public void enterCSS(StringBuilder builder) {
+	public void enterCSS(CSSBuilder builder) {
+    	builder.applyScope();
 		builder.append(selectors.get(0));
 		builder.append(" {\n");
+		builder.addScope();
 	}
 
 	@Override
-	public void exitCSS(StringBuilder builder) {
-		builder.append("}\n");
+	public void exitCSS(CSSBuilder builder) {
+		builder.removeScope();
+    	builder.append("}\n");
 	}
 
 	@Override

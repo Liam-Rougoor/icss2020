@@ -3,6 +3,7 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.ast.types.PropertyType;
 import nl.han.ica.icss.checker.VariableStore;
+import nl.han.ica.icss.generator.CSSBuilder;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -72,13 +73,14 @@ public class Declaration extends ASTNode {
 	}
 
 	@Override
-	public void enterCSS(StringBuilder builder) {
+	public void enterCSS(CSSBuilder builder) {
+		builder.applyScope();
 		builder.append(property.name);
 		builder.append(": ");
 	}
 
 	@Override
-	public void exitCSS(StringBuilder builder) {
+	public void exitCSS(CSSBuilder builder) {
 		builder.append(";\n");
 	}
 }

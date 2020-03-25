@@ -5,12 +5,12 @@ import nl.han.ica.icss.ast.*;
 public class Generator {
 
 	public String generate(AST ast) {
-		StringBuilder builder = new StringBuilder();
+		CSSBuilder builder = new CSSBuilder();
 		generate(ast.root, builder, 0);
 		return builder.toString();
 	}
 
-	public void generate(ASTNode node, StringBuilder builder, int scope){
+	public void generate(ASTNode node, CSSBuilder builder, int scope){
 
 		node.enterCSS(builder);
 

@@ -3,6 +3,7 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.SemanticError;
 import nl.han.ica.icss.checker.VariableStore;
+import nl.han.ica.icss.generator.CSSBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +95,9 @@ public class ASTNode {
         return true;
     }
 
-    public void enterCSS(StringBuilder builder){
+    public void enterCSS(CSSBuilder builder){
     }
 
-    public void exitCSS(StringBuilder builder){
+    public void exitCSS(CSSBuilder builder){
     }
 }

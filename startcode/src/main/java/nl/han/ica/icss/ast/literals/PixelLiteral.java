@@ -2,6 +2,7 @@ package nl.han.ica.icss.ast.literals;
 
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.generator.CSSBuilder;
 
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public class PixelLiteral extends Literal {
     }
 
     @Override
-    public void enterCSS(StringBuilder builder) {
+    public void enterCSS(CSSBuilder builder) {
         builder.append(value);
         builder.append("px");
     }
