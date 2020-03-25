@@ -42,6 +42,11 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
+	public ExpressionType getType() {
+		return ExpressionType.VARIABLE;
+	}
+
+	@Override
 	public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
 		return variableTypes.getVariableType(name);
 	}

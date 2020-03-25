@@ -22,9 +22,9 @@ public class VariableAssignment extends ASTNode {
 
 	@Override
 	public ASTNode addChild(ASTNode child) {
-		if(name == null) {
+		if(child instanceof VariableReference) {
 			name = (VariableReference) child;
-		} else if(expression == null) {
+		} else if(child instanceof Expression) {
 			expression = (Expression) child;
 		}
 
@@ -60,5 +60,10 @@ public class VariableAssignment extends ASTNode {
 	@Override
 	public void check(VariableStore<ExpressionType> variableTypes) {
 		variableTypes.storeVariable(name.name, expression.getType(variableTypes));
+	}
+
+	@Override
+	public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+		variableValues.storeVariable(name.name, (Literal)expression);
 	}
 }

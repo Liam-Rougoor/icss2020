@@ -1,6 +1,9 @@
 package nl.han.ica.icss.ast.operations;
 
-import nl.han.ica.icss.ast.Operation;
+import nl.han.ica.icss.ast.*;
+import nl.han.ica.icss.ast.literals.PercentageLiteral;
+import nl.han.ica.icss.ast.literals.PixelLiteral;
+import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
 
@@ -20,10 +23,17 @@ public class MultiplyOperation extends Operation {
             lhs.setError(errorMessage);
             rhs.setError(errorMessage);
         }
+        setType(variableTypes);
     }
 
     @Override
-    public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
-        return lhs.getType(variableTypes) != ExpressionType.SCALAR ? lhs.getType(variableTypes) : rhs.getType(variableTypes);
+    protected void setType(VariableStore<ExpressionType> variableTypes) {
+        type = lhs.getType(variableTypes) != ExpressionType.SCALAR ? lhs.getType(variableTypes) : rhs.getType(variableTypes);
+
+    }
+
+    @Override
+    protected int calculate(Literal lhsLiteral, Literal rhsLiteral) {
+        return lhsLiteral.getIntValue() * rhsLiteral.getIntValue();
     }
 }

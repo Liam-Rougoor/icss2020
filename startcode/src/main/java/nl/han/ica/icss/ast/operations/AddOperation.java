@@ -1,6 +1,12 @@
 package nl.han.ica.icss.ast.operations;
 
+import nl.han.ica.icss.ast.ASTNode;
+import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.Operation;
+import nl.han.ica.icss.ast.VariableReference;
+import nl.han.ica.icss.ast.literals.PercentageLiteral;
+import nl.han.ica.icss.ast.literals.PixelLiteral;
+import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
 
@@ -11,6 +17,7 @@ public class AddOperation extends Operation {
         return "Add";
     }
 
+
     @Override
     public void check(VariableStore<ExpressionType> variableTypes) {
         super.check(variableTypes);
@@ -20,10 +27,16 @@ public class AddOperation extends Operation {
             lhs.setError(errorMessage + lhs.getType(variableTypes));
             rhs.setError(errorMessage + rhs.getType(variableTypes));
         }
+        setType(variableTypes);
     }
 
     @Override
-    public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
-        return lhs.getType(variableTypes);
+    protected void setType(VariableStore<ExpressionType> variableTypes) {
+        type = lhs.getType(variableTypes);
+    }
+
+    @Override
+    protected int calculate(Literal lhsLiteral, Literal rhsLiteral) {
+        return lhsLiteral.getIntValue() + rhsLiteral.getIntValue();
     }
 }

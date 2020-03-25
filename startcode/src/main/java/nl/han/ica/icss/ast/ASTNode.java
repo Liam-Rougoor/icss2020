@@ -57,7 +57,7 @@ public class ASTNode {
     public void check(VariableStore<ExpressionType> variableTypes) {
     }
 
-    public void transform(VariableStore<Literal> variableValues) {
+    public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
     }
 
     @Override

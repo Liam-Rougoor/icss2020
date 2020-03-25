@@ -3,9 +3,6 @@ package nl.han.ica.icss.transforms;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.checker.VariableStore;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
 public class EvalExpressions implements Transform {
 
     private VariableStore<Literal> variableValues;
@@ -17,21 +14,21 @@ public class EvalExpressions implements Transform {
     @Override
     public void apply(AST ast) {
         variableValues = new VariableStore<>();
-        transform(ast.root);
+        transform(ast.root, null);
     }
 
-    private void transform(ASTNode node){
-        if(node instanceof IfClause || node instanceof Stylerule){
+    private void transform(ASTNode node, ASTNode parent){
+        if(node instanceof IfClause || node instanceof Stylerule || node instanceof Stylesheet){
             variableValues.addScopeLevel();
         }
 
-        node.transform(variableValues);
         for(ASTNode child : node.getChildren()){
-            transform(child);
+            transform(child, node);
         }
+        node.transform(variableValues, parent);
 
         //TODO Refactor, niet SOLID
-        if(node instanceof IfClause || node instanceof Stylerule){
+        if(node instanceof IfClause || node instanceof Stylerule || node instanceof Stylesheet){
             variableValues.removeScopeLevel();
         }
     }
