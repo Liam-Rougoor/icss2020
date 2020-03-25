@@ -55,10 +55,14 @@ public class ASTNode {
         return error != null;
     }
 
-    public void check(VariableStore<ExpressionType> variableTypes) {
+    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
     }
 
-    public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+    public void exitCheck(VariableStore<ExpressionType> variableTypes){}
+
+    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent){}
+
+    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
     }
 
     @Override

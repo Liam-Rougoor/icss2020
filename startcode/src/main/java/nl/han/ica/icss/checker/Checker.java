@@ -1,11 +1,6 @@
 package nl.han.ica.icss.checker;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
 import nl.han.ica.icss.ast.*;
-import nl.han.ica.icss.ast.literals.BoolLiteral;
-import nl.han.ica.icss.ast.literals.ColorLiteral;
 import nl.han.ica.icss.ast.types.*;
 
 public class Checker {
@@ -19,19 +14,12 @@ public class Checker {
     }
 
     private void check(ASTNode node){
-        //TODO Refactor, niet SOLID
-        if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.addScopeLevel();
-        }
+        node.enterCheck(variableTypes);
 
-        node.check(variableTypes);
         for(ASTNode child : node.getChildren()){
             check(child);
         }
 
-        //TODO Refactor, niet SOLID
-        if(node instanceof IfClause || node instanceof Stylerule){
-            variableTypes.removeScopeLevel();
-        }
+        node.exitCheck(variableTypes);
     }
 }

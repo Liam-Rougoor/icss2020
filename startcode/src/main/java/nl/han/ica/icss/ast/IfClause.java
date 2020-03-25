@@ -76,17 +76,28 @@ public class IfClause extends ASTNode {
     }
 
     @Override
-    public void check(VariableStore<ExpressionType> variableTypes) {
+    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
         ExpressionType conditionType = conditionalExpression.getType(variableTypes);
         if (conditionType != ExpressionType.BOOL) {
             String errorMessage = "Expression must be of type boolean. ";
             setError(errorMessage);
             conditionalExpression.setError(errorMessage + conditionType);
         }
+        variableTypes.addScopeLevel();
     }
 
     @Override
-    public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+    public void exitCheck(VariableStore<ExpressionType> variableTypes) {
+        variableTypes.removeScopeLevel();
+    }
+
+    @Override
+    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+        variableValues.addScopeLevel();
+    }
+
+    @Override
+    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
         if (((BoolLiteral) conditionalExpression).value) {
             parent.removeChild(this);
             for (ASTNode bodyNode : body) {
@@ -95,5 +106,6 @@ public class IfClause extends ASTNode {
         } else {
             parent.removeChild(this);
         }
+        variableValues.removeScopeLevel();
     }
 }

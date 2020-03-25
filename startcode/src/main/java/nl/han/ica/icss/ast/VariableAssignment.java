@@ -58,12 +58,12 @@ public class VariableAssignment extends ASTNode {
 	}
 
 	@Override
-	public void check(VariableStore<ExpressionType> variableTypes) {
+	public void enterCheck(VariableStore<ExpressionType> variableTypes) {
 		variableTypes.storeVariable(name.name, expression.getType(variableTypes));
 	}
 
 	@Override
-	public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+	public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
 		variableValues.storeVariable(name.name, (Literal)expression);
 	}
 }

@@ -122,7 +122,6 @@ public class ASTListener extends ICSSBaseListener {
 	public void enterExpression(ICSSParser.ExpressionContext ctx) {
 		if(ctx.getChildCount() == 3){
 			Operation operation = null;
-			// TODO Strings mogelijk refactoren in G4 bestand (naar operator o.i.d.)
 			if(ctx.getChild(1).getText().charAt(0) == '*'){
 				operation = new MultiplyOperation();
 			} else if(ctx.getChild(1).getText().charAt(0) == '+'){

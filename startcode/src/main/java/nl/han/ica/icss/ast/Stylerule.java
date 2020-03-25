@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.generator.CSSBuilder;
 
 import java.util.ArrayList;
@@ -51,6 +53,26 @@ public class Stylerule extends ASTNode {
 		}
 
 		return this;
+	}
+
+	@Override
+	public void enterCheck(VariableStore<ExpressionType> variableTypes) {
+		variableTypes.addScopeLevel();
+	}
+
+	@Override
+	public void exitCheck(VariableStore<ExpressionType> variableTypes) {
+		variableTypes.removeScopeLevel();
+	}
+
+	@Override
+	public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+		variableValues.addScopeLevel();
+	}
+
+	@Override
+	public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+		variableValues.removeScopeLevel();
 	}
 
 	@Override

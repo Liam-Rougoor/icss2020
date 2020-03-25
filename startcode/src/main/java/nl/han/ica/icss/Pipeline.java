@@ -7,7 +7,7 @@ import nl.han.ica.icss.generator.Generator;
 import nl.han.ica.icss.parser.ASTListener;
 import nl.han.ica.icss.parser.ICSSLexer;
 import nl.han.ica.icss.parser.ICSSParser;
-import nl.han.ica.icss.transforms.EvalExpressions;
+import nl.han.ica.icss.transforms.Transformer;
 import nl.han.ica.icss.transforms.RemoveIf;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
@@ -105,7 +105,7 @@ public class Pipeline implements ANTLRErrorListener {
         if(ast == null)
             return;
 
-        (new EvalExpressions()).apply(ast);
+        (new Transformer()).apply(ast);
         (new RemoveIf()).apply(ast);
 
         transformed = errors.isEmpty();

@@ -62,7 +62,7 @@ public class Declaration extends ASTNode {
 	}
 
 	@Override
-	public void check(VariableStore<ExpressionType> variableTypes) {
+	public void enterCheck(VariableStore<ExpressionType> variableTypes) {
 		if(property.getType() == PropertyType.COLOR && expression.getType(variableTypes) != ExpressionType.COLOR
 		|| property.getType() == PropertyType.SIZE && expression.getType(variableTypes) != ExpressionType.PIXEL && expression.getType(variableTypes) != ExpressionType.PERCENTAGE){
 			String errorMessage = "Property and expression type do not match. ";

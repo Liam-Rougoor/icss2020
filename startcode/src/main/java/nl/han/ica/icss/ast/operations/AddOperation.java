@@ -1,12 +1,7 @@
 package nl.han.ica.icss.ast.operations;
 
-import nl.han.ica.icss.ast.ASTNode;
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.Operation;
-import nl.han.ica.icss.ast.VariableReference;
-import nl.han.ica.icss.ast.literals.PercentageLiteral;
-import nl.han.ica.icss.ast.literals.PixelLiteral;
-import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
 
@@ -19,8 +14,8 @@ public class AddOperation extends Operation {
 
 
     @Override
-    public void check(VariableStore<ExpressionType> variableTypes) {
-        super.check(variableTypes);
+    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
+        super.enterCheck(variableTypes);
         String errorMessage = "Operands must be of equal type. ";
         if(lhs.getType(variableTypes) != rhs.getType(variableTypes)){
             setError(errorMessage);

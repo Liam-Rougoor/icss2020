@@ -45,7 +45,7 @@ public abstract class Operation extends Expression {
     }
 
     @Override
-    public void check(VariableStore<ExpressionType> variableTypes) {
+    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
         boolean error = false;
         if(lhs.getType(variableTypes) == ExpressionType.COLOR){
             lhs.setError("Cannot use arithmetic operations on colors");
@@ -60,7 +60,7 @@ public abstract class Operation extends Expression {
     }
 
     @Override
-    public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
         Literal literal;
         Literal lhsLiteral = lhs.getType() != ExpressionType.VARIABLE ? (Literal) lhs : variableValues.getVariableType(((VariableReference) lhs).name);
         Literal rhsLiteral = rhs.getType() != ExpressionType.VARIABLE ? (Literal) rhs : variableValues.getVariableType(((VariableReference) rhs).name);

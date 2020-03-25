@@ -13,8 +13,8 @@ public class SubtractOperation extends Operation {
     }
 
     @Override
-    public void check(VariableStore<ExpressionType> variableTypes) {
-        super.check(variableTypes);
+    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
+        super.enterCheck(variableTypes);
         String errorMessage = "Operands must be of equal type. ";
         if (lhs.getType(variableTypes) != rhs.getType(variableTypes)) {
             setError(errorMessage);

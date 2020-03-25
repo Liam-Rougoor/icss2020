@@ -35,14 +35,14 @@ public class VariableReference extends Expression {
 	}
 
 	@Override
-	public void check(VariableStore<ExpressionType> variableTypes) {
+	public void enterCheck(VariableStore<ExpressionType> variableTypes) {
 		if(!variableTypes.isDefined(name)) {
 			setError("Variable is undefined within scope.");
 		}
 	}
 
 	@Override
-	public void transform(VariableStore<Literal> variableValues, ASTNode parent) {
+	public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
 		parent.removeChild(this);
 		parent.addChild(variableValues.getVariableType(name));
 	}
