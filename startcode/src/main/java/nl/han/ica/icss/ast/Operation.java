@@ -5,10 +5,11 @@ import nl.han.ica.icss.ast.literals.PixelLiteral;
 import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
+import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.ArrayList;
 
-public abstract class Operation extends Expression {
+public abstract class Operation extends Expression implements TransformExit {
 
     public Expression lhs;
     public Expression rhs;

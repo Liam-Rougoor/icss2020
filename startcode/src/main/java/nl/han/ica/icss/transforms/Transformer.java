@@ -7,23 +7,23 @@ public class Transformer implements Transform {
 
     private VariableStore<Literal> variableValues;
 
-    public Transformer() {
-        variableValues = new VariableStore<>();
-    }
-
     @Override
     public void apply(AST ast) {
         variableValues = new VariableStore<>();
+        variableValues.addScopeLevel();
+
         transform(ast.root, null);
     }
 
     private void transform(ASTNode node, ASTNode parent){
-        node.enterTransform(variableValues, parent);
-
+        if(node instanceof TransformEntry) {
+            ((TransformEntry)node).enterTransform(variableValues, parent);
+        }
         for(ASTNode child : node.getChildren()){
             transform(child, node);
         }
-
-        node.exitTransform(variableValues, parent);
+        if(node instanceof TransformExit) {
+            ((TransformExit)node).exitTransform(variableValues, parent);
+        }
     }
 }

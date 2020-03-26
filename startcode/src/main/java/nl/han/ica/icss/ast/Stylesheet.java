@@ -44,15 +44,15 @@ public class Stylesheet extends ASTNode {
         return this;
     }
 
-    @Override
-    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-        variableValues.addScopeLevel();
-    }
-
-    @Override
-    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-        variableValues.removeScopeLevel();
-    }
+//    @Override
+//    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+//        variableValues.addScopeLevel();
+//    }
+//
+//    @Override
+//    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+//        variableValues.removeScopeLevel();
+//    }
 
     @Override
     public boolean equals(Object o) {

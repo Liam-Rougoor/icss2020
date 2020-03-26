@@ -2,6 +2,7 @@ package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
+import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * An assignment binds a expression to an identifier.
  *
  */
-public class VariableAssignment extends ASTNode {
+public class VariableAssignment extends ASTNode implements TransformExit {
 	
 	public VariableReference name;
 	public Expression expression;

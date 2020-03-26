@@ -60,11 +60,6 @@ public class ASTNode {
 
     public void exitCheck(VariableStore<ExpressionType> variableTypes){}
 
-    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent){}
-
-    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-    }
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
