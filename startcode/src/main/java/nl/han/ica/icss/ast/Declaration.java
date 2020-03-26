@@ -5,6 +5,8 @@ import nl.han.ica.icss.ast.types.PropertyType;
 import nl.han.ica.icss.checker.CheckEntry;
 import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.generator.CSSBuilder;
+import nl.han.ica.icss.generator.CSSEntry;
+import nl.han.ica.icss.generator.CSSExit;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -12,7 +14,7 @@ import java.util.Objects;
 /*
  * A Declaration defines a style property. Declarations are things like "width: 100px"
  */
-public class Declaration extends ASTNode implements CheckEntry {
+public class Declaration extends ASTNode implements CheckEntry, CSSEntry, CSSExit {
 	public PropertyName property;
 	public Expression expression;
 

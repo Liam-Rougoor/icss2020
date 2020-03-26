@@ -88,10 +88,4 @@ public class ASTNode {
         }
         return true;
     }
-
-    public void enterCSS(CSSBuilder builder){
-    }
-
-    public void exitCSS(CSSBuilder builder){
-    }
 }

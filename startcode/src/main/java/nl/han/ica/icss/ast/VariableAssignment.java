@@ -68,4 +68,8 @@ public class VariableAssignment extends ASTNode implements TransformExit, CheckE
 	public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
 		variableValues.storeVariable(name.name, (Literal)expression);
 	}
+
+	public void remove(ASTNode parent) {
+		parent.removeChild(this);
+	}
 }

@@ -8,7 +8,6 @@ import nl.han.ica.icss.parser.ASTListener;
 import nl.han.ica.icss.parser.ICSSLexer;
 import nl.han.ica.icss.parser.ICSSParser;
 import nl.han.ica.icss.transforms.Transformer;
-import nl.han.ica.icss.transforms.RemoveIf;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -106,7 +105,6 @@ public class Pipeline implements ANTLRErrorListener {
             return;
 
         (new Transformer()).apply(ast);
-        (new RemoveIf()).apply(ast);
 
         transformed = errors.isEmpty();
     }

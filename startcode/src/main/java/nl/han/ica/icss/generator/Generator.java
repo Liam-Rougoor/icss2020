@@ -11,14 +11,17 @@ public class Generator {
 	}
 
 	public void generate(ASTNode node, CSSBuilder builder, int scope){
-
-		node.enterCSS(builder);
+		if(node instanceof CSSEntry) {
+			((CSSEntry)node).enterCSS(builder);
+		}
 
 		for(ASTNode child : node.getChildren()){
 			generate(child, builder, scope);
 		}
 
-		node.exitCSS(builder);
+		if(node instanceof CSSExit) {
+			((CSSExit)node).exitCSS(builder);
+		}
 
 	}
 }

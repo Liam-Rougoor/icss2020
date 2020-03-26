@@ -3,10 +3,11 @@ package nl.han.ica.icss.ast.literals;
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.generator.CSSBuilder;
+import nl.han.ica.icss.generator.CSSEntry;
 
 import java.util.Objects;
 
-public class PercentageLiteral extends Literal {
+public class PercentageLiteral extends Literal implements CSSEntry {
     public int value;
 
     public PercentageLiteral(int value) {

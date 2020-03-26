@@ -29,7 +29,10 @@ public class Stylesheet extends ASTNode {
 
     @Override
     public ArrayList<ASTNode> getChildren() {
-        return this.body;
+        ArrayList<ASTNode> children = new ArrayList<>();
+        children.addAll(body);
+
+        return children;
     }
 
     @Override
@@ -43,16 +46,6 @@ public class Stylesheet extends ASTNode {
         body.remove(child);
         return this;
     }
-
-//    @Override
-//    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-//        variableValues.addScopeLevel();
-//    }
-//
-//    @Override
-//    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-//        variableValues.removeScopeLevel();
-//    }
 
     @Override
     public boolean equals(Object o) {

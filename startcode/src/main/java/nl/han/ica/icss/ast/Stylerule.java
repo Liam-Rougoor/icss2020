@@ -5,13 +5,15 @@ import nl.han.ica.icss.checker.CheckEntry;
 import nl.han.ica.icss.checker.CheckExit;
 import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.generator.CSSBuilder;
+import nl.han.ica.icss.generator.CSSEntry;
+import nl.han.ica.icss.generator.CSSExit;
 import nl.han.ica.icss.transforms.TransformEntry;
 import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Stylerule extends ASTNode implements TransformEntry, TransformExit, CheckEntry, CheckExit {
+public class Stylerule extends ASTNode implements TransformEntry, TransformExit, CheckEntry, CheckExit, CSSEntry, CSSExit {
 	
 	public ArrayList<Selector> selectors = new ArrayList<>();
 	public ArrayList<ASTNode> body = new ArrayList<>();

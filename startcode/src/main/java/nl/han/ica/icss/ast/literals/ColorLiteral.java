@@ -3,10 +3,11 @@ package nl.han.ica.icss.ast.literals;
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.generator.CSSBuilder;
+import nl.han.ica.icss.generator.CSSEntry;
 
 import java.util.Objects;
 
-public class ColorLiteral extends Literal {
+public class ColorLiteral extends Literal implements CSSEntry {
     public String value;
 
     public ColorLiteral(String value) {
