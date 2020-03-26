@@ -14,12 +14,14 @@ public class Checker {
     }
 
     private void check(ASTNode node){
-        node.enterCheck(variableTypes);
-
+        if(node instanceof CheckEntry) {
+            ((CheckEntry)node).enterCheck(variableTypes);
+        }
         for(ASTNode child : node.getChildren()){
             check(child);
         }
-
-        node.exitCheck(variableTypes);
+        if(node instanceof CheckExit) {
+            ((CheckExit)node).exitCheck(variableTypes);
+        }
     }
 }

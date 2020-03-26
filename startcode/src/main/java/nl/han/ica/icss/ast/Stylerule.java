@@ -1,6 +1,8 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.CheckEntry;
+import nl.han.ica.icss.checker.CheckExit;
 import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.generator.CSSBuilder;
 import nl.han.ica.icss.transforms.TransformEntry;
@@ -9,7 +11,7 @@ import nl.han.ica.icss.transforms.TransformExit;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Stylerule extends ASTNode implements TransformEntry, TransformExit {
+public class Stylerule extends ASTNode implements TransformEntry, TransformExit, CheckEntry, CheckExit {
 	
 	public ArrayList<Selector> selectors = new ArrayList<>();
 	public ArrayList<ASTNode> body = new ArrayList<>();

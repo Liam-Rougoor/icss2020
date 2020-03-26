@@ -55,11 +55,6 @@ public class ASTNode {
         return error != null;
     }
 
-    public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-    }
-
-    public void exitCheck(VariableStore<ExpressionType> variableTypes){}
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

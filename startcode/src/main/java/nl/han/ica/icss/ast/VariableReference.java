@@ -1,12 +1,13 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.types.ExpressionType;
+import nl.han.ica.icss.checker.CheckEntry;
 import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.Objects;
 
-public class VariableReference extends Expression implements TransformExit {
+public class VariableReference extends Expression implements TransformExit, CheckEntry {
 
 	public String name;
 
