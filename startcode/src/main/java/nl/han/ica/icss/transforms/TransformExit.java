@@ -5,5 +5,5 @@ import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.checker.VariableStore;
 
 public interface TransformExit {
-    void exitTransform(VariableStore<Literal> builder, ASTNode parent);
+    void exitTransform(VariableStore<Literal> variableValues, ASTNode parent);
 }

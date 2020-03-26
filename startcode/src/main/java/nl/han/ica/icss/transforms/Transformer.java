@@ -6,18 +6,11 @@ import nl.han.ica.icss.checker.VariableStore;
 public class Transformer implements Transform {
 
     private VariableStore<Literal> variableValues;
-    private Transform variableRemover;
-
-    public Transformer(){
-        variableRemover = new VariableAssignmentRemover();
-    }
 
     @Override
     public void apply(AST ast) {
         variableValues = new VariableStore<>();
-        variableValues.addScopeLevel();
         transform(ast.root, null);
-        variableRemover.apply(ast);
     }
 
     private void transform(ASTNode node, ASTNode parent){

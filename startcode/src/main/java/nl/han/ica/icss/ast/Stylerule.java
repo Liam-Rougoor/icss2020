@@ -7,13 +7,11 @@ import nl.han.ica.icss.checker.VariableStore;
 import nl.han.ica.icss.generator.CSSBuilder;
 import nl.han.ica.icss.generator.CSSEntry;
 import nl.han.ica.icss.generator.CSSExit;
-import nl.han.ica.icss.transforms.TransformEntry;
-import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Stylerule extends ASTNode implements TransformEntry, TransformExit, CheckEntry, CheckExit, CSSEntry, CSSExit {
+public class Stylerule extends VariableScopeNode implements CSSEntry, CSSExit {
 	
 	public ArrayList<Selector> selectors = new ArrayList<>();
 	public ArrayList<ASTNode> body = new ArrayList<>();
@@ -59,26 +57,6 @@ public class Stylerule extends ASTNode implements TransformEntry, TransformExit,
 		}
 
 		return this;
-	}
-
-	@Override
-	public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-		variableTypes.addScopeLevel();
-	}
-
-	@Override
-	public void exitCheck(VariableStore<ExpressionType> variableTypes) {
-		variableTypes.removeScopeLevel();
-	}
-
-	@Override
-	public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-		variableValues.addScopeLevel();
-	}
-
-	@Override
-	public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-		variableValues.removeScopeLevel();
 	}
 
 	@Override

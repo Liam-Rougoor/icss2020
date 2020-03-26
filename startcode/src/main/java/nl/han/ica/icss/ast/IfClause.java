@@ -2,16 +2,12 @@ package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.ast.literals.BoolLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
-import nl.han.ica.icss.checker.CheckEntry;
-import nl.han.ica.icss.checker.CheckExit;
 import nl.han.ica.icss.checker.VariableStore;
-import nl.han.ica.icss.transforms.TransformEntry;
-import nl.han.ica.icss.transforms.TransformExit;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class IfClause extends ASTNode implements TransformEntry, TransformExit, CheckEntry, CheckExit {
+public class IfClause extends VariableScopeNode {
 
 
     public Expression conditionalExpression;
@@ -87,17 +83,7 @@ public class IfClause extends ASTNode implements TransformEntry, TransformExit, 
             setError(errorMessage);
             conditionalExpression.setError(errorMessage + conditionType);
         }
-        variableTypes.addScopeLevel();
-    }
-
-    @Override
-    public void exitCheck(VariableStore<ExpressionType> variableTypes) {
-        variableTypes.removeScopeLevel();
-    }
-
-    @Override
-    public void enterTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-        variableValues.addScopeLevel();
+        super.enterCheck(variableTypes);
     }
 
     @Override
@@ -110,6 +96,6 @@ public class IfClause extends ASTNode implements TransformEntry, TransformExit, 
         } else {
             parent.removeChild(this);
         }
-        variableValues.removeScopeLevel();
+        super.exitTransform(variableValues, parent);
     }
 }

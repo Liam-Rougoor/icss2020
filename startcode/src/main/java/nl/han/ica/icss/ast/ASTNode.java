@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ASTNode {
 
+    public boolean variablesRemoved = false;
     private SemanticError error = null;
 
     /*

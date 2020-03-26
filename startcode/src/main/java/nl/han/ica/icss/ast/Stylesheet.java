@@ -1,16 +1,12 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.checker.SemanticError;
-import nl.han.ica.icss.checker.VariableStore;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * A stylesheet is the root node of the AST, it consists of one or more statements
  */
-public class Stylesheet extends ASTNode {
-
+public class Stylesheet extends VariableScopeNode {
 
     public ArrayList<ASTNode> body;
 

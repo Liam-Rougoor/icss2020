@@ -9,7 +9,6 @@ public class Checker {
 
     public void check(AST ast) {
         variableTypes = new VariableStore<>();
-        variableTypes.addScopeLevel();
         check(ast.root);
     }
 

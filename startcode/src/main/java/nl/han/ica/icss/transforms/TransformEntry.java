@@ -5,5 +5,5 @@ import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.checker.VariableStore;
 
 public interface TransformEntry {
-    void enterTransform(VariableStore<Literal> builder, ASTNode parent);
+    void enterTransform(VariableStore<Literal> variableValues, ASTNode parent);
 }
