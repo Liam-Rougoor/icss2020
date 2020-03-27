@@ -15,7 +15,6 @@ public class AddOperation extends Operation {
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        super.enterCheck(variableTypes);
         String errorMessage = "Operands must be of equal type. ";
         if(lhs.getType(variableTypes) != rhs.getType(variableTypes)){
             setError(errorMessage);
@@ -23,6 +22,7 @@ public class AddOperation extends Operation {
             rhs.setError(errorMessage + rhs.getType(variableTypes));
         }
         setType(variableTypes);
+        super.enterCheck(variableTypes);
     }
 
     @Override

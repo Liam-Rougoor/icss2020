@@ -1,7 +1,5 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.checker.VariableStore;
-
 import java.util.ArrayList;
 import java.util.Objects;
 

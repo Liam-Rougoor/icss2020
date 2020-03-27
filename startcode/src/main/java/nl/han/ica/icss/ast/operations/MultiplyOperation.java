@@ -13,7 +13,6 @@ public class MultiplyOperation extends Operation {
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        super.enterCheck(variableTypes);
         String errorMessage = "Multiplication must contain scalar value.";
         if (lhs.getType(variableTypes) != ExpressionType.SCALAR && rhs.getType(variableTypes) != ExpressionType.SCALAR) {
             setError(errorMessage);
@@ -21,6 +20,7 @@ public class MultiplyOperation extends Operation {
             rhs.setError(errorMessage);
         }
         setType(variableTypes);
+        super.enterCheck(variableTypes);
     }
 
     @Override

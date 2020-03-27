@@ -19,18 +19,18 @@ public abstract class Operation extends Expression implements TransformExit, Che
     @Override
     public ArrayList<ASTNode> getChildren() {
         ArrayList<ASTNode> children = new ArrayList<>();
-        if(lhs != null)
+        if (lhs != null)
             children.add(lhs);
-        if(rhs != null)
+        if (rhs != null)
             children.add(rhs);
         return children;
     }
 
     @Override
     public ASTNode addChild(ASTNode child) {
-        if(lhs == null) {
+        if (lhs == null) {
             lhs = (Expression) child;
-        } else if(rhs == null) {
+        } else if (rhs == null) {
             rhs = (Expression) child;
         }
         return this;
@@ -38,9 +38,9 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     @Override
     public ASTNode removeChild(ASTNode child) {
-        if(lhs == child) {
+        if (lhs == child) {
             lhs = null;
-        } else if(rhs == child){
+        } else if (rhs == child) {
             rhs = null;
         }
         return this;
@@ -48,16 +48,23 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
+        checkType(variableTypes, ExpressionType.COLOR, "Cannot use arithmetic operations on colors.");
+        checkType(variableTypes, ExpressionType.BOOL, "Cannot use arithmetic operations on booleans.");
+    }
+
+    private void checkType(VariableStore<ExpressionType> variableTypes, ExpressionType illegalType, String errorMessage) {
         boolean error = false;
-        if(lhs.getType(variableTypes) == ExpressionType.COLOR){
-            lhs.setError("Cannot use arithmetic operations on colors");
-            error = true;
-        } if(rhs.getType(variableTypes) == ExpressionType.COLOR){
-            rhs.setError("Cannot use arithmetic operations on colors.");
+
+        if (lhs.getType(variableTypes) == illegalType) {
+            lhs.setError(errorMessage);
             error = true;
         }
-        if(error){
-            setError("Cannot use arithmetic operations on colors.");
+        if (rhs.getType(variableTypes) == illegalType) {
+            rhs.setError(errorMessage);
+            error = true;
+        }
+        if (error) {
+            setError("Invalid operation types.");
         }
     }
 
@@ -67,18 +74,18 @@ public abstract class Operation extends Expression implements TransformExit, Che
         Literal lhsLiteral = lhs.getType() != ExpressionType.VARIABLE ? (Literal) lhs : variableValues.getVariableType(((VariableReference) lhs).name);
         Literal rhsLiteral = rhs.getType() != ExpressionType.VARIABLE ? (Literal) rhs : variableValues.getVariableType(((VariableReference) rhs).name);
         int calculation = calculate(lhsLiteral, rhsLiteral);
-        switch(type) {
+        switch (type) {
             case SCALAR:
                 literal = new ScalarLiteral(calculation);
                 break;
             case PIXEL:
-                literal =  new PixelLiteral(calculation);
+                literal = new PixelLiteral(calculation);
                 break;
             case PERCENTAGE:
-                literal =  new PercentageLiteral(calculation);
+                literal = new PercentageLiteral(calculation);
                 break;
             default:
-                literal =  null;
+                literal = null;
         }
         parent.removeChild(this);
         parent.addChild(literal);
@@ -86,7 +93,7 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     @Override
     public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
-        if(type==null){
+        if (type == null) {
             setType(variableTypes);
         }
         return getType();
