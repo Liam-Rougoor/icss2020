@@ -71,9 +71,10 @@ if_expression: IF BOX_BRACKET_OPEN boolean_expression BOX_BRACKET_CLOSE OPEN_BRA
 else_expression: ELSE OPEN_BRACE rule_element* CLOSE_BRACE;
 property: PROP_COLOR | PROP_BACKGROUND_COLOR | PROP_WIDTH | PROP_HEIGHT;
 expression: expression MUL expression | expression (PLUS | MIN) expression | value;
-boolean_expression: comparison | NOT boolean_expression | bool | variable_reference;
+boolean_expression: comparison | not_expression | bool | variable_reference;
 comparison: expression (LESS | GREATER | LESSEQUAL | GREATEREQUAL | EQUAL) expression;
+not_expression: NOT boolean_expression;
 value: PIXELSIZE | PERCENTAGE | COLOR | variable_reference | SCALAR;
-variable_assignment: variable_reference ASSIGNMENT_OPERATOR (expression | boolean_expression) SEMICOLON;
+variable_assignment: variable_reference ASSIGNMENT_OPERATOR (boolean_expression | expression) SEMICOLON;
 variable_reference: CAPITAL_IDENT;
 bool: TRUE | FALSE;

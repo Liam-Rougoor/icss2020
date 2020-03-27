@@ -4,7 +4,7 @@ import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
 
-public class MultiplyOperation extends Operation {
+public class MultiplyOperation extends ArithmeticOperation {
 
     @Override
     public String getNodeLabel() {
@@ -19,7 +19,6 @@ public class MultiplyOperation extends Operation {
             lhs.setError(errorMessage);
             rhs.setError(errorMessage);
         }
-        setType(variableTypes);
         super.enterCheck(variableTypes);
     }
 

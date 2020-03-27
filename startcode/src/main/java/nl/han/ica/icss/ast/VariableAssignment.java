@@ -24,7 +24,7 @@ public class VariableAssignment extends ASTNode implements TransformExit, CheckE
 
 	@Override
 	public ASTNode addChild(ASTNode child) {
-		if(child instanceof VariableReference) {
+		if(child instanceof VariableReference && name == null) {
 			name = (VariableReference) child;
 		} else if(child instanceof Expression) {
 			expression = (Expression) child;

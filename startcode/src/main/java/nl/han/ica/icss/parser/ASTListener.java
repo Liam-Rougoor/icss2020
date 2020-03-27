@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.ast.literals.*;
-import nl.han.ica.icss.ast.operations.AddOperation;
-import nl.han.ica.icss.ast.operations.MultiplyOperation;
-import nl.han.ica.icss.ast.operations.SubtractOperation;
+import nl.han.ica.icss.ast.operations.*;
 import nl.han.ica.icss.ast.selectors.ClassSelector;
 import nl.han.ica.icss.ast.selectors.IdSelector;
 import nl.han.ica.icss.ast.selectors.TagSelector;
@@ -173,6 +171,41 @@ public class ASTListener extends ICSSBaseListener {
 
 	@Override
 	public void exitElse_expression(ICSSParser.Else_expressionContext ctx) {
+		currentContainer.pop();
+	}
+
+	@Override
+	public void enterComparison(ICSSParser.ComparisonContext ctx) {
+		Comparison comparison = new Comparison();
+		char firstChar = ctx.getChild(1).getText().charAt(0);
+		if(firstChar=='<'){
+			comparison.addComparisonStrategy(new LessStrategy());
+		} else if(firstChar=='>'){
+			comparison.addComparisonStrategy(new GreaterStrategy());
+		} else if(firstChar=='='){
+			comparison.addComparisonStrategy(new EqualStrategy());
+		}
+		if(ctx.getChild(1).getText().length()==2){
+			comparison.addComparisonStrategy(new EqualStrategy());
+		}
+		currentContainer.peek().addChild(comparison);
+		currentContainer.push(comparison);
+	}
+
+	@Override
+	public void exitComparison(ICSSParser.ComparisonContext ctx) {
+		currentContainer.pop();
+	}
+
+	@Override
+	public void enterNot_expression(ICSSParser.Not_expressionContext ctx) {
+		NotOperation operation = new NotOperation();
+		currentContainer.peek().addChild(operation);
+		currentContainer.push(operation);
+	}
+
+	@Override
+	public void exitNot_expression(ICSSParser.Not_expressionContext ctx) {
 		currentContainer.pop();
 	}
 }

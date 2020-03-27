@@ -1,9 +1,5 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.ast.literals.BoolLiteral;
-import nl.han.ica.icss.ast.literals.PercentageLiteral;
-import nl.han.ica.icss.ast.literals.PixelLiteral;
-import nl.han.ica.icss.ast.literals.ScalarLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.CheckEntry;
 import nl.han.ica.icss.checker.VariableStore;
@@ -49,27 +45,15 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        checkType(variableTypes, ExpressionType.COLOR);
-        checkType(variableTypes, ExpressionType.BOOL);
+        checkIllegalType(variableTypes, ExpressionType.COLOR);
     }
 
-    protected void checkType(VariableStore<ExpressionType> variableTypes, ExpressionType illegalType) {
-        boolean error = false;
-        String errorMessage = "Operand cannot be of type " + illegalType;
-        if (lhs.getType(variableTypes) == illegalType) {
-            lhs.setError(errorMessage);
-            error = true;
-        }
-        if (rhs.getType(variableTypes) == illegalType) {
-            rhs.setError(errorMessage);
-            error = true;
-        }
-        if (error) {
-            setError("Invalid operation types.");
-        }
+    protected void checkIllegalType(VariableStore<ExpressionType> variableTypes, ExpressionType illegalType) {
+        checkIllegalType(lhs, variableTypes, illegalType);
+        checkIllegalType(rhs, variableTypes, illegalType);
     }
 
-    protected void checkType(Expression expression, VariableStore<ExpressionType> variableTypes, ExpressionType illegalType){
+    protected void checkIllegalType(Expression expression, VariableStore<ExpressionType> variableTypes, ExpressionType illegalType){
         String errorMessage = "Operand cannot be of type " + illegalType;
         if(expression.getType(variableTypes) == illegalType){
             expression.setError(errorMessage);
@@ -77,27 +61,22 @@ public abstract class Operation extends Expression implements TransformExit, Che
         }
     }
 
-    @Override
-    public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-        Literal literal;
-        Literal lhsLiteral = lhs.getType() != ExpressionType.VARIABLE ? (Literal) lhs : variableValues.getVariableType(((VariableReference) lhs).name);
-        Literal rhsLiteral = rhs.getType() != ExpressionType.VARIABLE ? (Literal) rhs : variableValues.getVariableType(((VariableReference) rhs).name);
-        int calculation = calculate(lhsLiteral, rhsLiteral);
-        switch (type) {
-            case SCALAR:
-                literal = new ScalarLiteral(calculation);
-                break;
-            case PIXEL:
-                literal = new PixelLiteral(calculation);
-                break;
-            case PERCENTAGE:
-                literal = new PercentageLiteral(calculation);
-                break;
-            default:
-                literal = null;
+    protected void checkEqualType(VariableStore<ExpressionType> variableTypes){
+        String errorMessage = "Operands must be of equal type. ";
+        if(lhs.getType(variableTypes) != rhs.getType(variableTypes)){
+            setError(errorMessage);
+            lhs.setError(errorMessage + lhs.getType(variableTypes));
+            rhs.setError(errorMessage + rhs.getType(variableTypes));
         }
-        parent.removeChild(this);
-        parent.addChild(literal);
+        setType(variableTypes);
+    }
+
+    protected void checkOnlyType(Expression expression, VariableStore<ExpressionType> variableTypes, ExpressionType allowedType){
+        String errorMessage = "Operand must be of type " + allowedType;
+        if(expression.getType(variableTypes) != allowedType){
+            expression.setError(errorMessage);
+            setError(errorMessage);
+        }
     }
 
     @Override
@@ -115,5 +94,4 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     protected abstract void setType(VariableStore<ExpressionType> variableTypes);
 
-    protected abstract int calculate(Literal lhsLiteral, Literal rhsLiteral);
 }

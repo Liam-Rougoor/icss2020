@@ -1,9 +1,9 @@
 package nl.han.ica.icss.ast.operations;
 
 import nl.han.ica.icss.ast.ASTNode;
-import nl.han.ica.icss.ast.Expression;
 import nl.han.ica.icss.ast.Literal;
 import nl.han.ica.icss.ast.Operation;
+import nl.han.ica.icss.ast.literals.BoolLiteral;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.CheckEntry;
 import nl.han.ica.icss.checker.VariableStore;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Comparison extends Operation implements CheckEntry, TransformExit {
-    List<ComparisonStrategy> comparisonStrategies = new ArrayList<>();
+    private List<ComparisonStrategy> comparisonStrategies = new ArrayList<>();
 
     protected boolean compare(){
         for(ComparisonStrategy comparison : comparisonStrategies){
@@ -25,18 +25,12 @@ public class Comparison extends Operation implements CheckEntry, TransformExit {
     }
 
     @Override
-    public ASTNode addChild(ASTNode child) {
-        if(child instanceof Expression){
-            if(lhs == null){
-                lhs = (Expression)child;
-            } else if (rhs == null){
-                rhs = (Expression)child;
-            }
-        }
-        if(child instanceof ComparisonStrategy){
-            comparisonStrategies.add((ComparisonStrategy)child);
-        }
-        return this;
+    public String getNodeLabel() {
+        return "Comparison";
+    }
+
+    public void addComparisonStrategy(ComparisonStrategy strategy){
+        comparisonStrategies.add(strategy);
     }
 
     @Override
@@ -61,14 +55,15 @@ public class Comparison extends Operation implements CheckEntry, TransformExit {
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        checkType(variableTypes, ExpressionType.BOOL);
-        checkType(variableTypes, ExpressionType.COLOR);
-        checkType(variableTypes, ExpressionType.UNDEFINED);
+        checkEqualType(variableTypes);
+        checkIllegalType(variableTypes, ExpressionType.COLOR);
+        checkIllegalType(variableTypes, ExpressionType.UNDEFINED);
     }
 
     @Override
     public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
-
+        parent.removeChild(this);
+        parent.addChild(new BoolLiteral(compare()));
     }
 
     @Override
@@ -77,12 +72,12 @@ public class Comparison extends Operation implements CheckEntry, TransformExit {
     }
 
     @Override
-    protected void setType(VariableStore<ExpressionType> variableTypes) {
-        type = ExpressionType.BOOL;
+    public ExpressionType getType(VariableStore<ExpressionType> variableTypes) {
+        return ExpressionType.BOOL;
     }
 
     @Override
-    protected int calculate(Literal lhsLiteral, Literal rhsLiteral) {
-        return 0;
+    protected void setType(VariableStore<ExpressionType> variableTypes) {
+        type = ExpressionType.BOOL;
     }
 }

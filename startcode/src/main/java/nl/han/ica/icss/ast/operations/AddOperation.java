@@ -1,27 +1,19 @@
 package nl.han.ica.icss.ast.operations;
 
 import nl.han.ica.icss.ast.Literal;
-import nl.han.ica.icss.ast.Operation;
 import nl.han.ica.icss.ast.types.ExpressionType;
 import nl.han.ica.icss.checker.VariableStore;
 
-public class AddOperation extends Operation {
+public class AddOperation extends ArithmeticOperation {
 
     @Override
     public String getNodeLabel() {
         return "Add";
     }
 
-
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        String errorMessage = "Operands must be of equal type. ";
-        if(lhs.getType(variableTypes) != rhs.getType(variableTypes)){
-            setError(errorMessage);
-            lhs.setError(errorMessage + lhs.getType(variableTypes));
-            rhs.setError(errorMessage + rhs.getType(variableTypes));
-        }
-        setType(variableTypes);
+        checkEqualType(variableTypes);
         super.enterCheck(variableTypes);
     }
 
