@@ -4,6 +4,7 @@ Boolean expressies zijn geïmplementeerd. Hieronder een voorbeeld syntax:
 - 5 > 2
 - Var1 := 3 == 5;
 - Var2 := !Var1;
+
 Voor het implementeren van boolean expressies heb ik een Strategy pattern gebruikt en een Comparison class gemaakt. Elke strategy bevat
 de daadwerkelijke vergelijking >, <, ==.
 
