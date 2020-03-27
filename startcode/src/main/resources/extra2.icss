@@ -1,0 +1,10 @@
+a {
+    if[FALSE]{
+        width: 10px;
+    } else {
+        if[TRUE]{
+            height: 100px;
+        }
+        color: #ff0000;
+    }
+}

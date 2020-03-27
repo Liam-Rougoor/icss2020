@@ -12,12 +12,12 @@ public class IfClause extends VariableScopeNode {
 
     public Expression conditionalExpression;
     public ArrayList<ASTNode> body = new ArrayList<>();
+    public ElseClause elseClause;
 
     public IfClause() {
     }
 
     public IfClause(Expression conditionalExpression, ArrayList<ASTNode> body) {
-
         this.conditionalExpression = conditionalExpression;
         this.body = body;
     }
@@ -32,6 +32,9 @@ public class IfClause extends VariableScopeNode {
         ArrayList<ASTNode> children = new ArrayList<>();
         children.add(conditionalExpression);
         children.addAll(body);
+        if (elseClause != null) {
+            children.add(elseClause);
+        }
 
         return children;
     }
@@ -40,6 +43,8 @@ public class IfClause extends VariableScopeNode {
     public ASTNode addChild(ASTNode child) {
         if (child instanceof Expression)
             conditionalExpression = (Expression) child;
+        else if (child instanceof ElseClause)
+            elseClause = (ElseClause) child;
         else
             body.add(child);
 
@@ -48,8 +53,10 @@ public class IfClause extends VariableScopeNode {
 
     @Override
     public ASTNode removeChild(ASTNode child) {
-        if(child instanceof Expression){
+        if (child instanceof Expression) {
             conditionalExpression = null;
+        } else if (child instanceof ElseClause) {
+            elseClause = null;
         } else {
             body.remove(child);
         }
@@ -88,13 +95,16 @@ public class IfClause extends VariableScopeNode {
 
     @Override
     public void exitTransform(VariableStore<Literal> variableValues, ASTNode parent) {
+        parent.removeChild(this);
         if (((BoolLiteral) conditionalExpression).value) {
-            parent.removeChild(this);
             for (ASTNode bodyNode : body) {
                 parent.addChild(bodyNode);
             }
-        } else {
-            parent.removeChild(this);
+        } else if (elseClause != null) {
+            for(ASTNode bodyNode : elseClause.getChildren()){
+                parent.addChild(bodyNode);
+            }
+            elseClause = null;
         }
         super.exitTransform(variableValues, parent);
     }

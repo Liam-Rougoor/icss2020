@@ -163,4 +163,16 @@ public class ASTListener extends ICSSBaseListener {
 		VariableReference variable = new VariableReference(ctx.getChild(0).getText());
 		currentContainer.peek().addChild(variable);
 	}
+
+	@Override
+	public void enterElse_expression(ICSSParser.Else_expressionContext ctx) {
+		ElseClause elseClause = new ElseClause();
+		currentContainer.peek().addChild(elseClause);
+		currentContainer.push(elseClause);
+	}
+
+	@Override
+	public void exitElse_expression(ICSSParser.Else_expressionContext ctx) {
+		currentContainer.pop();
+	}
 }

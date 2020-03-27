@@ -3,6 +3,7 @@ grammar ICSS;
 //--- LEXER: ---
 // IF support:
 IF: 'if';
+ELSE: 'else';
 BOX_BRACKET_OPEN: '[';
 BOX_BRACKET_CLOSE: ']';
 
@@ -52,7 +53,8 @@ stylesheet_rule: selector OPEN_BRACE rule_element* CLOSE_BRACE;
 rule_element: declaration | if_expression | variable_assignment;
 selector: ID_IDENT | CLASS_IDENT | LOWER_IDENT;
 declaration:  property COLON expression SEMICOLON;
-if_expression: IF BOX_BRACKET_OPEN value BOX_BRACKET_CLOSE OPEN_BRACE rule_element* CLOSE_BRACE;
+if_expression: IF BOX_BRACKET_OPEN value BOX_BRACKET_CLOSE OPEN_BRACE rule_element* CLOSE_BRACE else_expression?;
+else_expression: ELSE OPEN_BRACE rule_element* CLOSE_BRACE;
 property: PROP_COLOR | PROP_BACKGROUND_COLOR | PROP_WIDTH | PROP_HEIGHT;
 expression: expression MUL expression | expression (PLUS | MIN) expression | value;
 value: PIXELSIZE | PERCENTAGE | COLOR | bool | variable_reference | SCALAR;
