@@ -1,5 +1,6 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.ast.literals.BoolLiteral;
 import nl.han.ica.icss.ast.literals.PercentageLiteral;
 import nl.han.ica.icss.ast.literals.PixelLiteral;
 import nl.han.ica.icss.ast.literals.ScalarLiteral;
@@ -48,13 +49,13 @@ public abstract class Operation extends Expression implements TransformExit, Che
 
     @Override
     public void enterCheck(VariableStore<ExpressionType> variableTypes) {
-        checkType(variableTypes, ExpressionType.COLOR, "Cannot use arithmetic operations on colors.");
-        checkType(variableTypes, ExpressionType.BOOL, "Cannot use arithmetic operations on booleans.");
+        checkType(variableTypes, ExpressionType.COLOR);
+        checkType(variableTypes, ExpressionType.BOOL);
     }
 
-    private void checkType(VariableStore<ExpressionType> variableTypes, ExpressionType illegalType, String errorMessage) {
+    protected void checkType(VariableStore<ExpressionType> variableTypes, ExpressionType illegalType) {
         boolean error = false;
-
+        String errorMessage = "Operand cannot be of type " + illegalType;
         if (lhs.getType(variableTypes) == illegalType) {
             lhs.setError(errorMessage);
             error = true;
@@ -65,6 +66,14 @@ public abstract class Operation extends Expression implements TransformExit, Che
         }
         if (error) {
             setError("Invalid operation types.");
+        }
+    }
+
+    protected void checkType(Expression expression, VariableStore<ExpressionType> variableTypes, ExpressionType illegalType){
+        String errorMessage = "Operand cannot be of type " + illegalType;
+        if(expression.getType(variableTypes) == illegalType){
+            expression.setError(errorMessage);
+            setError(errorMessage);
         }
     }
 
